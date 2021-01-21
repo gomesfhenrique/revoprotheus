@@ -1,6 +1,8 @@
 #INCLUDE "PROTHEUS.CH"
 #INCLUDE "APWIZARD.CH"
 #INCLUDE "FWMVCDEF.CH"
+#INCLUDE "FILEIO.CH"
+#INCLUDE "AP5MAIL.CH"
 
 //Declaração das STRS
 #define STR0001 "MEU RH - Diagnóstico do ambiente"
@@ -116,6 +118,17 @@
 #define STR0111 "Parâmetro MV_EMSENHA não está configurado"
 #define STR0112 "Parâmetro MV_RELSERV não está configurado"
 #define STR0113 "O Documento a seguir orienta na configuração dos e-mails/workflows"
+#define STR0114 "O parâmetro MV_RELAUTH está habilitado. Nesse caso o servidor SMTP usará autenticação"
+#define STR0115 "O parâmetro MV_RELAUTH está desabilitado. Nesse caso o servidor SMTP não usará autenticação"
+#define STR0116 "Email Para:"
+#define STR0117 "Não foi possível enviar o email para o destinatário."
+#define STR0118 "Informe o email de destino."
+#define STR0119 "Não foi possível se conectar no servidor SMTP. Verifique se o usuário(Email) e senha estão corretos."
+#define STR0120 "Teste de email enviado com sucesso."
+#define STR0121 "Testando conexão SMTP e evio de email."
+#define STR0122 "Parâmetro existe na base de dados."
+#define STR0123 "Parâmetro não existe na base de dados."
+#define STR0124 "Documentação: "
 #define STR0300 "Dados de Workflow"
 #define STR0301 "O sistema irá avaliar se está correto o vínculo do funcionário e o respectivo participante ao qual ele está relacionado. Será verificado também se existe alguma inconsistência no Cadastro do Participante para acesso ao Meu RH."
 #define STR0302 "O sistema irá avaliar a configuração do Servidor REST e verificar se existe alguma inconsistência nas instâncias do serviço do Meu RH. Serão avaliados também os arquivos de configuração de cada instância (PROPERTIES.JSON)."
@@ -223,6 +236,7 @@ Local oButton2    := Nil
 Local nService    := 0
 Local cCPF        := Space(30)
 Local cPwd        := Space(30)
+Local cEmailTo    := Space(100)
 Local aServices   := {OemToAnsi(STR0010), OemToAnsi(STR0011), OemToAnsi(STR0012)} //"Informe de Rendimentos" # "Recibo de Pagamento" # "Gestão de Ferias"
 
 DEFAULT nOperation   := 1
@@ -249,7 +263,18 @@ ElseIf nOperation == 2
    GETSRVDATA()
 // Valida dados do servidor de e-mail.
 ElseIf nOperation == 3
-   fMRhMail()
+   DEFINE DIALOG oDlg TITLE OemToAnsi(STR0118) FROM 0,0 TO 150,400 PIXEL //"Informe o email de destino.
+
+   @ 35,15 SAY OemToAnsi(STR0116) SIZE 25,8 PIXEL OF oDlg //"EMAIL"
+   @ 45,15 MSGET cEmailTo SIZE 80,10 PIXEL OF oDlg
+
+   @ 20,120 BUTTON oButton1 PROMPT "&"+OemToAnsi(STR0116) ; //Email Para:
+   ACTION ( fMRhMail(cEmailTo), oDlg:End() ) SIZE 70,15 OF oDlg  PIXEL WHEN (!Empty(cEmailTo))
+
+   @ 40,120 BUTTON oButton2 PROMPT "&"+OemToAnsi(STR0017) ; //"Fechar"
+   ACTION (oDlg:End(), lClose := .F. ) SIZE 70,15 OF oDlg  PIXEL
+
+   ACTIVATE DIALOG oDlg CENTER
 //Valida os serviços do MEU RH
 Else
    lClose := .F.
@@ -915,43 +940,46 @@ Local nX       := 0
 Local cTemp    := ""
 Local aRet     := {}
 Local aParsMHR := {}
+Local lRet     := .T.
 
 //Parametro, Valor Default
-aParsMHR := {  {"MV_ACESSPP",  ""}, ; //https://tdn.totvs.com/x/dNlc
-               {"MV_DABERTO",   0}, ; //https://tdn.totvs.com/x/cXBGIQ
-               {"MV_HASHVLD",  60}, ; //Não encontrei
-               {"MV_POLSEG",    0}, ; //https://tdn.totvs.com/x/7InUIQ
-               {"MV_NVLAPR",  .F.}, ; //https://tdn.totvs.com/x/a6yGIQ
-               {"MV_TCFVREN", "N"}, ; //https://tdn.totvs.com/x/2lh9Ig
-               {"MV_MCIGUAL", "N"}, ;
-               {"MV_HORASDE", "N"}, ;
-               {"MV_PONMES",   ""}, ;
-               {"MV_PAPONTA",  ""}, ;
-               {"MV_DSOLFER",  30}, ;
-               {"MV_MRHFERP", .T.}, ; 
-               {"MV_GETMAUT", "S"}, ;  
-               {"MV_ORGCFG",  "0"}, ;
-               {"MV_SOLICRP", "0"}, ;
-               {"MV_DESPMIN", "0"}, ;
-               {"MV_TCFBHVL", .F.}, ;
-               {"MV_TCF013A", "01.02.03.04.05"}, ;
-               {"MV_TCFDADT", "0"}, ;
-               {"MV_TCFDFOL", "0"}, ;
-               {"MV_TCFD131", "0"}, ;
-               {"MV_TCFD132", "0"}, ;
-               {"MV_TCFDEXT", "0"}, ; 
-               {"MV_RELSERV", ""}, ;
-               {"MV_EMCONTA", ""}, ;
-               {"MV_EMSENHA", ""} }
+aParsMHR := {  {"MV_ACESSPP",  "", "https://tdn.totvs.com/x/dNlc"}, ; //https://tdn.totvs.com/x/dNlc
+               {"MV_DABERTO",   0, "https://tdn.totvs.com/x/cXBGIQ"}, ; //https://tdn.totvs.com/x/cXBGIQ
+               {"MV_HASHVLD",  60, ""}, ; //Não encontrei
+               {"MV_POLSEG",    0, "https://tdn.totvs.com/x/7InUIQ"}, ; //https://tdn.totvs.com/x/7InUIQ
+               {"MV_NVLAPR",  .F., "https://tdn.totvs.com/x/a6yGIQ"}, ; //https://tdn.totvs.com/x/a6yGIQ
+               {"MV_TCFVREN", "N", "https://tdn.totvs.com/x/2lh9Ig"}, ; //https://tdn.totvs.com/x/2lh9Ig
+               {"MV_MCIGUAL", "N", ""}, ;
+               {"MV_HORASDE", "N", ""}, ;
+               {"MV_PONMES",   "", ""}, ;
+               {"MV_PAPONTA",  "", ""}, ;
+               {"MV_DSOLFER",  30, ""}, ;
+               {"MV_MRHFERP", .T., ""}, ; 
+               {"MV_GETMAUT", "S", ""}, ;  
+               {"MV_ORGCFG",  "0", ""}, ;
+               {"MV_SOLICRP", "0", ""}, ;
+               {"MV_DESPMIN", "0", ""}, ;
+               {"MV_TCFBHVL", .F., ""}, ;
+               {"MV_TCF013A", "01.02.03.04.05", ""}, ;
+               {"MV_TCFDADT", "0", ""}, ;
+               {"MV_TCFDFOL", "0", ""}, ;
+               {"MV_TCFD131", "0", ""}, ;
+               {"MV_TCFD132", "0", ""}, ;
+               {"MV_TCFDEXT", "0", ""}, ; 
+               {"MV_RELSERV", "", ""}, ;
+               {"MV_EMCONTA", "", ""}, ;
+               {"MV_EMSENHA", "", ""} }
 
 For nX := 1 To Len(aParsMHR)
    
    cTemp := cValToChar( SuperGetMv(aParsMHR[nX,1],,aParsMHR[nX,2], cFilPar) )
    cTemp := If( Empty(cTemp), OemToAnsi(STR0098), cTemp ) //"Não informado"
-
+   lRet  := fMRhChkMv(aParsMHR[nX,1], cFilPar)
    aAdd( aRet, { ;
                   UPPER(aParsMHR[nX,1]), ;
-                  cTemp } )
+                  cTemp, ;
+                  Iif(lRet, OemToAnsi(STR0122), OemToAnsi(STR0123)), ;
+                  aParsMHR[nX,3] } )
 Next nX
 
 Return( aRet )
@@ -1215,7 +1243,7 @@ AutoGrLog( OemToAnsi(STR0061) + Replicate(".", 20-Len(STR0061)) + ": " + GetEnvS
 AutoGrLog("")
 AutoGrLog( OemToAnsi(STR0062) ) //"Parâmetros verificados no Meu RH"
 For nX := 1 To Len(aDataPar)
-   AutoGrLog( aDataPar[nX,1] +" => "+ aDataPar[nX,2] )
+   AutoGrLog( aDataPar[nX,1] + " => " + aDataPar[nX,2] + " => " + aDataPar[nX,3] + " => " + OemToAnsi(STR0124) + aDataPar[nX,4])
 Next nX
 
 AutoGrLog("")
@@ -1328,19 +1356,27 @@ Return( cRet )
 @since:		21/01/2021
 @param:		
 /*/
-Static Function fMRhMail()
+Static Function fMRhMail(cEmailTo)
 
-Local aInfoINI := {}
+Local lOk   := .F.
+Local lSendOk := .F.
 Local nX    := 0
+Local aInfoINI := {}
 Local aLog  := {}
 Local aErr  := {}
 Local aWarn := {}
 Local aLogG := {}
 Local aErrG := {}
 Local aWarnG:= {}
-Local cMailConta	:=SUPERGETMV("MV_EMCONTA")
-Local cMailServer	:=SUPERGETMV("MV_RELSERV")
-Local cMailSenha	:=SUPERGETMV("MV_EMSENHA")
+Local cMailConta	:= SUPERGETMV("MV_EMCONTA")
+Local cMailServer	:= SUPERGETMV("MV_RELSERV")
+Local cMailSenha	:= SUPERGETMV("MV_EMSENHA")
+Local lMailAuth   := SUPERGETMV("MV_RELAUTH")
+Local cUsuario		:= ""
+Local cAssunto    := OemToAnsi("Teste de envio de email.")
+Local cMensagem   := OemToAnsi("Email enviado.")
+Local cAttach     := ""
+
 
 //Verifica se existe o SMTP Server
 If Empty(cMailServer)
@@ -1358,24 +1394,61 @@ If Empty(cMailSenha)
 EndIf
 
 If Len(aWarn) > 0
-   aAdd(aWarn, { OemToAnsi(STR0113) })
+   aAdd(aWarn, { OemToAnsi(STR0113) }) // "O Documento a seguir orienta na configuração dos e-mails/workflows"
    aAdd(aWarn, { "https://tdn.totvs.com/pages/releaseview.action?pageId=271166884"})
 EndIf
+
+If lMailAuth
+   aAdd(aLog, { OemToAnsi(STR0114) }) // O parâmetro MV_RELAUTH está habilitado. Nesse caso o servidor SMTP usará autenticação
+Else
+   aAdd(aLog, { OemToAnsi(STR0115) }) // O parâmetro MV_RELAUTH está desabilitado. Nesse caso o servidor SMTP não usará autenticação
+EndIf
+
+// Testa conexão SMTP.
+aAdd(aLog, { OemToAnsi(STR0121) }) // Testando conexão SMTP e evio de email.
+If !Empty(cMailServer) .AND. !Empty(cMailConta) .AND. !Empty(cMailSenha)
+   cUsuario := SubStr(cMailConta,1,At("@",cMailConta)-1)
+   CONNECT SMTP SERVER cMailServer ACCOUNT cMailConta PASSWORD cMailSenha RESULT lOk
+   If lOk     
+      If lMailAuth
+         If !MailAuth(cMailConta,cMailSenha)
+            If !MailAuth(cUsuario, cMailSenha)
+               aAdd( aErr, { OemToAnsi(STR0113) })
+            EndIf
+         EndIf
+      EndIf                                                                     
+         SEND MAIL FROM cMailConta;
+               TO cEmailTo;
+               BCC cEmailTo;					
+               SUBJECT cAssunto;
+               BODY cMensagem;  
+               ATTACHMENT cAttach;					
+               RESULT lSendOk 
+      If !lSendOk
+         aAdd(aErr, { OemToAnsi(STR0117) }) // "Não foi possível enviar o email para o destinatário."
+      Else
+         aAdd(aLog, { OemToAnsi(STR0120) }) // "Teste de email enviado com sucesso.
+      EndIf
+      DISCONNECT SMTP SERVER
+   Else
+      aAdd(aErr, { OemToAnsi(STR0119) }) // "Não foi possível se conectar no servidor SMTP. Verifique se o usuário(Email) e senha estão corretos."
+   EndIf
+EndIf   
 
 aInfoINI := fGetAppInfo()
 
 If Len(aInfoINI) > 0
    If ( nPos := aScan(aInfoINI, {|x| x[1] == "[MAIL]"}) ) > 0
-      aAdd( aLog, { OemToAnsi(STR0107) })
+      aAdd( aLog, { OemToAnsi(STR0107) }) //"Seção email"
       For nX := nPos To Len(aInfoINI)
          If aInfoINI[nX,1] == "[MAIL]" .And. !Empty(aInfoINI[nX,2]) .And. !Empty(aInfoINI[nX,3])
             aAdd( aLog, { aInfoINI[nX,2] + " : " + "Valor: " + aInfoINI[nX,3] } )
          EndIf
       Next nX
    Else
-      aAdd( aWarn, { OemToAnsi(STR0107) })
-      aAdd( aWarn, { OemToAnsi(STR0108) })
-      aAdd( aWarn, { OemToAnsi(STR0113) })
+      aAdd( aWarn, { OemToAnsi(STR0107) }) //"Seção email"
+      aAdd( aWarn, { OemToAnsi(STR0108) }) // "Seção E-mail não encontrada no seu AppServer.Ini"
+      aAdd( aWarn, { OemToAnsi(STR0113) }) // "O Documento a seguir orienta na configuração dos e-mails/workflows"
       aAdd( aWarn, {"https://tdn.totvs.com/x/aopc"})
    EndIf
 EndIf
@@ -1446,3 +1519,24 @@ EndDo
 (cQuery)->(DBCloseArea())
 
 Return()
+
+/*/{Protheus.doc} fMRhChkMv()
+- Responsável por checar se os MVs existem na SX6
+@author:	Henrique Ferreira
+@since:		21/01/2021
+@param:		
+/*/
+Static Function fMRhChkMv(cParametro, cFil)
+
+Local aArea := GetArea()
+Local lRet := .T.
+
+DbSelectArea("SX6")
+dbSetOrder(1)
+If !( dbSeek( xFilial("SX6", cFil) + cParametro) )
+   lRet := .F.
+EndIf
+
+RestArea(aArea)
+Return lRet
+
