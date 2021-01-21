@@ -116,6 +116,12 @@
 #define STR0111 "Parâmetro MV_EMSENHA não está configurado"
 #define STR0112 "Parâmetro MV_RELSERV não está configurado"
 #define STR0113 "O Documento a seguir orienta na configuração dos emails/workflows"
+#define STR0300 "Dados de Workflow"
+#define STR0301 "O sistema irá avaliar se está correto o vínculo do funcionário e o respectivo participante ao qual ele está relacionado. Será verificado também se existe alguma não-conformidade no cadastro do Participante para acesso ao Meu RH."
+#define STR0302 "O sistema irá avaliar a configuração do Servidor REST e verificar se existe alguma não-conformidade nas instâncias do serviço do Meu RH. E serão avaliados também os arquivos de configuração de cada instência (PROPERTIES.JSON)."
+#define STR0303 "O sistema irá executar um teste de requisição para o serviço selecionado, para verificar se existe alguma não-conformidade na requisição. Será necessário informar um usuário e senha válidos."
+#define STR0304 "O sistema irá avaliar a configuração do Workflow e verificar se existe alguma não-conformidade nas instâncias do serviço do Meu RH."
+
 
 //Marcelo - Novas strings a partir do 200
 #define STR0200 "Data/Hora:"
@@ -186,13 +192,13 @@ Local cText := ""
 Local oFont := TFont():New('Arial',,-11,.T.)
 
    If nOpc == 1
-      cText := "O sistema irá avaliar se está correto o vínculo do funcionário e o respectivo participante ao qual ele está relacionado. Será verificado também se existe alguma não-conformidade no cadastro do Participante para acesso ao Meu RH."
+      cText := OemToAnsi(STR0301)
    ElseIf nOpc == 2
-      cText := "O sistema irá avaliar a configuração do Servidor REST e verificar se existe alguma não-conformidade nas instâncias do serviço do Meu RH. E serão avaliados também os arquivos de configuração de cada instência (PROPERTIES.JSON)."
+      cText := OemToAnsi(STR0302)
    ElseIf nOpc == 3
-      cText := "O sistema irá verificar as configurações de email do seu ambiente para o correto funcionamento do Workflow e rotinas de recuperar senha."
+      cText := OemToAnsi(STR0303)
    Else
-      cText := "O sistema irá executar um teste de requisição para o serviço selecionado, para verificar se existe alguma não-conformidade na requisição. Será necessário informar um usuário e senha válidos."
+      cText := OemToAnsi(STR0304)
    EndIf
 
    //Elimina o objeto do ultimo label
@@ -859,6 +865,7 @@ aArqsMHR := {  "GPEM580.PRX", ;
                "WSCLIENT_WSORGSTRUCTURE.PRX", ;
                "WSCLIENT_WSRHPAYMENTRECEIPTS.PRX", ;
                "WSCLIENT_WSRHREQUEST.PRX", ;
+               "WSCFG034.PRX", ;
                "WSGPE010.PRW", ;
                "WSGPE020.PRW", ;
                "WSGPE030.PRW", ;
@@ -866,6 +873,7 @@ aArqsMHR := {  "GPEM580.PRX", ;
                "WSGPE080.PRW", ;
                "WSORG010.PRW", ;
                "WSPORTAL01.PRX"}
+               "APIGETSTRUCTURE.PRW" }
 
 For nX := 1 To Len(aArqsMHR)
    aTemp := GetApoInfo(aArqsMHR[nX])
@@ -893,20 +901,34 @@ Local aRet     := {}
 Local aParsMHR := {}
 
 //Parametro, Valor Default
-aParsMHR := {  {"MV_ACESSPP",  ""}, ;
-               {"MV_HASHVLD",  60}, ;
-               {"MV_POLSEG",    0}, ;
-               {"MV_NVLAPR",  .F.}, ;
-               {"MV_TCFVREN", "N"}, ;
+aParsMHR := {  {"MV_ACESSPP",  ""}, ; //https://tdn.totvs.com/x/dNlc
+               {"MV_DABERTO",   0}, ; //https://tdn.totvs.com/x/cXBGIQ
+               {"MV_HASHVLD",  60}, ; //Não encontrei
+               {"MV_POLSEG",    0}, ; //https://tdn.totvs.com/x/7InUIQ
+               {"MV_NVLAPR",  .F.}, ; //https://tdn.totvs.com/x/a6yGIQ
+               {"MV_TCFVREN", "N"}, ; //https://tdn.totvs.com/x/2lh9Ig
                {"MV_MCIGUAL", "N"}, ;
+               {"MV_DIAS2501","N"}, ;
+               {"MV_HORASDE", "N"}, ;
+               {"MV_PONMES",   ""}, ;
+               {"MV_PAPONTA",  ""}, ;
+               {"MV_PROJSRF", .T.}, ;
+               {"MV_DSOLFER",  30}, ;
+               {"MV_MRHFERP", .T.}, ; 
+               {"MV_GETMAUT", "S"}, ;  
                {"MV_ORGCFG",  "0"}, ;
+               {"MV_SOLICRP", "0"}, ;
                {"MV_DESPMIN", "0"}, ;
                {"MV_TCFBHVL", .F.}, ;
+               {"MV_TCF013A", "01.02.03.04.05"}, ;
                {"MV_TCFDADT", "0"}, ;
                {"MV_TCFDFOL", "0"}, ;
                {"MV_TCFD131", "0"}, ;
                {"MV_TCFD132", "0"}, ;
-               {"MV_TCFDEXT", "0"} }
+               {"MV_TCFDEXT", "0"}, ; 
+               {"MV_RELSERV", ""}, ;
+               {"MV_EMCONTA", ""}, ;
+               {"MV_EMSENHA", ""} }
 
 For nX := 1 To Len(aParsMHR)
    
