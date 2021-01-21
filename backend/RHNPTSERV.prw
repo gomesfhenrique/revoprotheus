@@ -2,14 +2,14 @@
 #INCLUDE "APWIZARD.CH"
 #INCLUDE "FWMVCDEF.CH"
 
-//Declaracao das STRS
+//Declaração das STRS
 #define STR0001 "MEU RH - Diagnóstico do ambiente"
-#define STR0002 "Wizard para verificação e análise do ambiente do MEU RH"
-#define STR0003 "Checagem de dados e dos serviços necessários para o funcionamento do MEU RH"
-#define STR0004 "Serão realizadas validações e testes a partir dos dados informados e da configuração do ambiente"
-#define STR0005 "Selecione o Tipo de análise que será efetuada"
-#define STR0006 "Serao avaliadas a configuracao do ambiente e a base de dados"
-#define STR0007 "Dados do Usuario"
+#define STR0002 "Verificação e análise do ambiente do MEU RH"
+#define STR0003 "Checagem de dados e serviços necessários para o funcionamento do MEU RH"
+#define STR0004 "Será realizada uma análise da configuração do usuário e do ambiente conforme os dados informados informados em tela. Ao final do processamento será gerado um log com as informações validadas, incluindo alertas e não-conformidades, além de fornecer orientações para auxiliar na solução das situações encontradas."
+#define STR0005 "Selecione o tipo de análise que será efetuada"
+#define STR0006 "Serão avaliadas as configurações do ambiente e a base de dados"
+#define STR0007 "Dados do Usuário"
 #define STR0008 "Dados do Servidor"
 #define STR0009 "Serviços Meu RH"
 #define STR0010 "Informe de Rendimentos"
@@ -24,14 +24,14 @@
 #define STR0019 "OK"
 #define STR0020 "Existe não-conformidade!"
 #define STR0021 "Desabilitada"
-#define STR0022 "Habilitada" 
+#define STR0022 "Habilitada"
 #define STR0023 "SERVIÇO REST"
 #define STR0024 "Porta REST"
 #define STR0025 "Segurança do Serviço"
 #define STR0026 "Habilitado"
 #define STR0027 "Desabilitado"
 #define STR0028 "SERVER -"
-#define STR0029 "A pasta com os arquivos do Meu RH nao está na raiz do Protheus. Isso afeta o funcionamento da rotina 'Esqueçi minha senha'."
+#define STR0029 "A pasta com os arquivos do Meu RH não está na raiz do Protheus. Isso afeta o funcionamento da rotina 'Esqueci minha senha'."
 #define STR0030 "PROPERTIES_JSON -"
 #define STR0031 "A porta do serviço REST"
 #define STR0032 "não está contido na URL do atributo 'baseUrl'."
@@ -42,7 +42,7 @@
 #define STR0037 "indicada sessão:"
 #define STR0038 "do arquivo APPSERVER.INI"
 #define STR0039 "Nenhuma instância do Meu RH foi encontrada nesse ambiente!"
-#define STR0040 "Nao foi possivel obter os dados. Verifique se o arquivo existe ou se os dados estão corretos."
+#define STR0040 "Não foi possível obter os dados. Verifique se o arquivo existe ou se os dados estão corretos."
 #define STR0041 "O complemento da URL no atributo 'baseUrl'
 #define STR0042 "Instâncias Meu RH:"
 #define STR0043 "Status"
@@ -73,15 +73,15 @@
 #define STR0068 "Afastado"
 #define STR0069 "Férias"
 #define STR0070 "PARTICIPANTE -"
-#define STR0071 "Não existe o campo (RD0_FILRH) no cadastro de Participantes."
-#define STR0072 "Funcionário não possui vínculo no cadastro de Participantes."
+#define STR0071 "Não existe o campo (RD0_FILRH) no Cadastro de Participantes."
+#define STR0072 "Funcionário não possui vínculo no Cadastro de Participantes."
 #define STR0073 "O campo"
 #define STR0074 "A filial do campo"
-#define STR0075 "no cadastro de Participantes é diferente da filial do funcionário"
+#define STR0075 "no Cadastro de Participantes é diferente da filial do funcionário"
 #define STR0076 "Não existe o campo"
 #define STR0077 "USUARIO_PORTAL -"
 #define STR0078 "O usuário:"
-#define STR0079 "informado no cadastro de participantes não possui Usuário Interno informado na tabela de usuários do SIGATCF - Campo"
+#define STR0079 "informado no Cadastro de Participantes não possui Usuário Interno informado na tabela de usuários do SIGATCF - Campo"
 #define STR0080 "PERMISSAO -"
 #define STR0081 "Não existe nenhuma permissão habilitada para o usuário"
 #define STR0082 "na tabela de permissões do Meu RH (Tabela RJD)"
@@ -102,31 +102,42 @@
 #define STR0097 "Nenhum funcionário localizado com o CPF:"
 #define STR0098 "Não informado"
 #define STR0099 "da Tabela AI3"
-#define STR0100 "não está informado no cadastro de Participantes"
+#define STR0100 "não está informado no Cadastro de Participantes"
 #define STR0101 "Porta HTTP"
 #define STR0102 "A porta HTTP não está contida na URL da instância do Meu RH"
 #define STR0103 "A URL da instância do Meu RH não possui complemento após a porta HTTP"
-#define STR0104 "informado no cadastro de participantes não foi localizado na tabela de usuários do SIGATCF - Tabela AI3"
-#define STR0105 "Serviço ainda nao disponível!"
+#define STR0104 "informado no Cadastro de Participantes não foi localizado na tabela de usuários do SIGATCF - Tabela AI3"
+#define STR0105 "Serviço ainda não disponível!"
 #define STR0106 "Atenção"
-#define STR0107 "Seção Email"
-#define STR0108 "Seção Email não encontrada no seu AppServer.Ini"
-#define STR0109 "Dados de Email"
+#define STR0107 "Seção E-mail"
+#define STR0108 "Seção E-mail não encontrada no seu AppServer.Ini"
+#define STR0109 "Dados de E-mail"
 #define STR0110 "Parâmetro MV_EMCONTA não está configurado"
 #define STR0111 "Parâmetro MV_EMSENHA não está configurado"
 #define STR0112 "Parâmetro MV_RELSERV não está configurado"
-#define STR0113 "O Documento a seguir orienta na configuração dos emails/workflows"
+#define STR0113 "O Documento a seguir orienta na configuração dos e-mails/workflows"
 #define STR0300 "Dados de Workflow"
-#define STR0301 "O sistema irá avaliar se está correto o vínculo do funcionário e o respectivo participante ao qual ele está relacionado. Será verificado também se existe alguma não-conformidade no cadastro do Participante para acesso ao Meu RH."
-#define STR0302 "O sistema irá avaliar a configuração do Servidor REST e verificar se existe alguma não-conformidade nas instâncias do serviço do Meu RH. E serão avaliados também os arquivos de configuração de cada instência (PROPERTIES.JSON)."
-#define STR0303 "O sistema irá executar um teste de requisição para o serviço selecionado, para verificar se existe alguma não-conformidade na requisição. Será necessário informar um usuário e senha válidos."
-#define STR0304 "O sistema irá avaliar a configuração do Workflow e verificar se existe alguma não-conformidade nas instâncias do serviço do Meu RH."
+#define STR0301 "O sistema irá avaliar se está correto o vínculo do funcionário e o respectivo participante ao qual ele está relacionado. Será verificado também se existe alguma inconsistência no Cadastro do Participante para acesso ao Meu RH."
+#define STR0302 "O sistema irá avaliar a configuração do Servidor REST e verificar se existe alguma inconsistência nas instâncias do serviço do Meu RH. Serão avaliados também os arquivos de configuração de cada instância (PROPERTIES.JSON)."
+#define STR0303 "O sistema irá executar uma validação de requisição para o serviço selecionado, para verificar se existe alguma inconsistência na requisição. Será necessário informar um usuário e senha válidos."
+#define STR0304 "O sistema irá avaliar a configuração do Workflow e verificar se existe alguma inconsistência nas instâncias do serviço do Meu RH."
 
 
 //Marcelo - Novas strings a partir do 200
 #define STR0200 "Data/Hora:"
 #define STR0201 "Grupo de empresa:"
 #define STR0202 "Filial:"
+#define STR0203 "O arquivo:"
+#define STR0204 "Não foi localizado no 'rootpath' desse ambiente."
+#define STR0205 "Sem essa informação não será possível criar o relacionamento entre o funcionário e o participante, e o acesso ao Meu RH não será possível."
+#define STR0206 "Para mais informações consulte o(s) link(s) abaixo:"
+#define STR0207 "O vínculo entre o funcionário e o participante não foi localizado na tabela 'Pessoas x Entidades' do Meu RH (Tabela RDZ)"
+#define STR0208 "Dados do vínculo Funcionário x Partipante"
+#define STR0209 "Entidade"
+#define STR0210 "Código da Entidade"
+#define STR0211 "Filial da Entidade"
+#define STR0212 "Código Usuário Portal"
+#define STR0213 "Código Filial Usuário Portal"
 
 //Fabio - Novas strings a partir do 300
 #define STR0300 ""
@@ -142,28 +153,25 @@ Função principal responsável por apresentar o Wizard para diagnóstico do ambient
 @param:		
 /*/
 User Function RHNPTSERV()
-
 Local oWizard, oPanel
 Local nTipo   := 1
-Local aTipos  := {OemToAnsi(STR0007), OemToAnsi(STR0008),OemToAnsi(STR0109), OemToAnsi(STR0009)} //"Dados do Usuario" # "Dados do Servidor" # "Servicos Meu RH"
-
+Local aTipos  := {OemToAnsi(STR0007), OemToAnsi(STR0008),OemToAnsi(STR0109), OemToAnsi(STR0009)} //"Dados do Usuário" # "Dados do Servidor" # "Serviços Meu RH"
 Private oSay
 Private lClose       := .T.
 Private lRelease25	:= GetRpoRelease() >= "12.1.025"
 Private lRelease27   := GetRpoRelease() >= "12.1.027"
-
-DEFINE WIZARD oWizard TITLE OemToAnsi(STR0001) ; //"MEU RH - Teste de Servicos"
-       HEADER OemToAnsi(STR0002) ; //"Wizard para verificacao e teste dos servicos do MEU RH"
-       MESSAGE OemToAnsi(STR0003) ; //"Checagem de dados e dos servicos necessarios para o funcionamento do MEU RH"
-       TEXT OemToAnsi(STR0004) ; //"Serao realizados testes de acesso e conectividade a partir dos dados informados e da configuracao do ambiente"
+DEFINE WIZARD oWizard TITLE OemToAnsi(STR0001) ; //"MEU RH - Teste de Serviços"
+       HEADER OemToAnsi(STR0002) ; //"Verificação e teste dos serviços do MEU RH"
+       MESSAGE OemToAnsi(STR0003) ; //"Checagem de dados e dos serviços necessários para o funcionamento do MEU RH"
+       TEXT OemToAnsi(STR0004) ; //"Serão realizados testes de acesso e conectividade a partir dos dados informados e da configuração do ambiente"
        NEXT {|| .T.} ;
        FINISH {|| .T. } ;
        PANEL
 
    // Segunda etapa
    CREATE PANEL oWizard ;
-          HEADER OemToAnsi(STR0005) ; //"Selecione o Tipo de analise que sera efetuada"
-          MESSAGE OemToAnsi(STR0006) ; //"Serao avaliados a configuracao do ambiente e a base de dados"
+          HEADER OemToAnsi(STR0005) ; //"Selecione o Tipo de análise que será efetuada"
+          MESSAGE OemToAnsi(STR0006) ; //"Serão avaliados a configuração do ambiente e a base de dados"
           BACK {|| .T. } ;
           NEXT {|| .F. } ;
           FINISH {|| U_RHNPTLOG(nTipo), lClose } ;
@@ -171,23 +179,18 @@ DEFINE WIZARD oWizard TITLE OemToAnsi(STR0001) ; //"MEU RH - Teste de Servicos"
    oPanel := oWizard:GetPanel(2)
    @ 30,20 RADIO oTipo VAR nTipo ITEMS aTipos[1],aTipos[2],aTipos[3],aTipos[4] SIZE 65,8 ;
       PIXEL OF oPanel ON CHANGE fGetDetail(oPanel,nTipo)
-
    fGetDetail(oPanel,nTipo)
-
 ACTIVATE WIZARD oWizard CENTERED
-
 Return
-
 /*/
 {Protheus.doc} fGetDetail()
 Função Responsável por exibir um texto com os detalhes que cada tipo de execução irá processar
 @author:	Marcelo Silveira
 @since:		18/01/2021
 @param:		oDlg - Objeto principal
-            nOpc - Codigo da operacao que esta sendo validada
+            nOpc - Código da operação que está sendo validada
 /*/
 Static Function fGetDetail(oDlg,nOpc)
-
 Local cText := ""
 Local oFont := TFont():New('Arial',,-11,.T.)
 
@@ -200,42 +203,32 @@ Local oFont := TFont():New('Arial',,-11,.T.)
    Else
       cText := OemToAnsi(STR0304)
    EndIf
-
-   //Elimina o objeto do ultimo label
+   //Elimina o objeto do último label
    FreeObj(oSay)
-
    //Exibe o label atual
    oSay:= TSay():Create(oDlg,{|| cText },80,20,,oFont,,,,.T.,,,260,60)
-
    //Alinha o texto do label (H = 3 justificado, V = 0 Topo)
    oSay:SetTextAlign(3, 0)
-
 Return
-
-
 /*/
 {Protheus.doc} RhNpTLog()
-Função Responsável por executar a chamada para cada operacao que esta sendo validada
+Função Responsável por executar a chamada para cada operação que está sendo validada
 @author:	Marcelo Silveira
 @since:		31/12/2020
-@param:		nOperation - Codigo da operacao que esta sendo validada
+@param:		nOperation - Código da operação que está sendo validada
 /*/
 User Function RhNpTLog(nOperation)
-
 Local oButton1    := Nil
 Local oButton2    := Nil
 Local nService    := 0
 Local cCPF        := Space(30)
 Local cPwd        := Space(30)
-Local aServices   := {OemToAnsi(STR0010), OemToAnsi(STR0011), OemToAnsi(STR0012)} //"Informe de Rendimentos" # "Recibo de Pagamento" # "Gestao de Ferias"
+Local aServices   := {OemToAnsi(STR0010), OemToAnsi(STR0011), OemToAnsi(STR0012)} //"Informe de Rendimentos" # "Recibo de Pagamento" # "Gestão de Ferias"
 
 DEFAULT nOperation   := 1
-
-//Valida dados do Usuario
+//Valida dados do Usuário
 If nOperation == 1
-
-   DEFINE DIALOG oDlg TITLE OemToAnsi(STR0013) FROM 0,0 TO 150,400 PIXEL //"Informe o CPF e a Senha do funcionario"
-
+   DEFINE DIALOG oDlg TITLE OemToAnsi(STR0013) FROM 0,0 TO 150,400 PIXEL //"Informe o CPF e a Senha do funcionário"
    @ 10,15 SAY OemToAnsi(STR0014) SIZE 25,8 PIXEL OF oDlg //"CPF"
    @ 20,15 MSGET cCPF PICTURE "@R 999.999.999-99" SIZE 80,10 PIXEL OF oDlg
 
@@ -254,16 +247,13 @@ If nOperation == 1
 ElseIf nOperation == 2
 
    GETSRVDATA()
-
-// Valida dados do servidor de email.
+// Valida dados do servidor de e-mail.
 ElseIf nOperation == 3
    fMRhMail()
 //Valida os serviços do MEU RH
 Else
    lClose := .F.
-
-   DEFINE DIALOG oDlg TITLE OemToAnsi(STR0013) FROM 0,0 TO 300,410 PIXEL //"Informe o CPF e a Senha do funcionario"
-
+   DEFINE DIALOG oDlg TITLE OemToAnsi(STR0013) FROM 0,0 TO 300,410 PIXEL //"Informe o CPF e a Senha do funcionário"
    @ 10,15 SAY OemToAnsi(STR0014) SIZE 25,8 PIXEL OF oDlg //"CPF"
    @ 20,15 MSGET cCPF PICTURE "@R 999.999.999-99" SIZE 80,10 PIXEL OF oDlg
 
@@ -275,8 +265,7 @@ Else
    @ 85,35 RADIO oTipo VAR nService ITEMS aServices[1],aServices[2],aServices[3] SIZE 65,8 PIXEL OF oDlg
 
    @ 20,120 BUTTON oButton1 PROMPT "&"+OemToAnsi(STR0016) ; //"Confirmar"
-   ACTION ( MsgInfo( OemToAnsi(STR0105), OemToAnsi(STR0106)) ) SIZE 70,15 OF oDlg  PIXEL //"Serviço ainda nao disponível!" # "Atenção"
-
+   ACTION ( MsgInfo( OemToAnsi(STR0105), OemToAnsi(STR0106)) ) SIZE 70,15 OF oDlg  PIXEL //"Serviço ainda não disponível!" # "Atenção"
    @ 40,120 BUTTON oButton2 PROMPT "&"+OemToAnsi(STR0017) ; //"Fechar"
    ACTION (oDlg:End(), lClose := .F. ) SIZE 70,15 OF oDlg  PIXEL
 
@@ -382,8 +371,7 @@ For nX := 1 To Len(aIdREST)
    Next nY
 
 Next nX
-
-//Identifica e avalia as secoes do Meu RH
+//Identifica e avalia as seções do Meu RH
 For nX := 1 To Len(aInfoINI)
    If UPPER(aInfoINI[nX,2]) == "INSTANCENAME" .And. UPPER(aInfoINI[nX,3]) == "MEURH"
       aAdd( aIdSession, UPPER(aInfoINI[nX,1]) )
@@ -413,8 +401,7 @@ nNumInst := Len(aSession)
 
 If nNumInst > 0
 
-   cSecurity := If( Empty(cSecurity) .Or. cSecurity == "0", OemToAnsi(STR0021), OemToAnsi(STR0022) ) //"Desabilitada" # "Habilitada" 
-
+   cSecurity := If( Empty(cSecurity) .Or. cSecurity == "0", OemToAnsi(STR0021), OemToAnsi(STR0022) ) //"Desabilitada" # "Habilitada"
    aAdd( aLog, { "" })
    aAdd( aLog, { OemToAnsi(STR0023) }) //"SERVIÇO REST"
    aAdd( aLog, { OemToAnsi(STR0101) + Replicate(".", 24-Len(STR0101)) + ": " + cHttPort }) //Porta HTTP
@@ -434,11 +421,10 @@ If nNumInst > 0
       Else
          aAdd( aLog, { "" })
       EndIf
-
-      //Verifica se o local dos arquivos do Meu RH estao dentro do rootpath
+      //Verifica se o local dos arquivos do Meu RH estão dentro do rootpath
       If !(cRoot $ aSession[nX,2])
-         //"SERVER -" # "A pasta com os arquivos do Meu RH nao esta na raiz do Protheus. Isso afeta o funcionamento da rotina 'Esqueci minha senha'."
-         aAdd( aWarn, {OemToAnsi(STR0028) +" "+ OemToAnsi(STR0029)} ) 
+         //"SERVER -" # "A pasta com os arquivos do Meu RH não está na raiz do Protheus. Isso afeta o funcionamento da rotina 'Esqueci minha senha'."
+         aAdd( aWarn, {OemToAnsi(STR0028) +" "+ OemToAnsi(STR0029)} )
       EndIf
 
       //Verifica se existe algum erro na URL da instância do Meu RH
@@ -446,8 +432,7 @@ If nNumInst > 0
 
          cTempURL := fRemStr( AllTrim(aSession[nX,1]), "[]")
          nCont    := AT(cHttPort, cTempURL) + Len(cHttPort)
-
-         //Verifica se a porta HTTP esta contida na URL
+         //Verifica se a porta HTTP está contida na URL
          If !cHttPort $ aSession[nX,1]
             //"SERVER -" # "A porta HTTP não está contida na URL da instância do Meu RH."
             aAdd( aWarn, { OemToAnsi(STR0028) +" "+ OemToAnsi(STR0102) +" ("+ cTempURL +")."  })
@@ -459,19 +444,15 @@ If nNumInst > 0
             aAdd( aWarn, { OemToAnsi(STR0028) +" "+ OemToAnsi(STR0103) +" ("+ cTempURL +")."  })
          EndIF
       EndIf      
-
-      //Obtem os dados do arquivo Properties.json
+      //Obtém os dados do arquivo Properties.json
       aArqProp := fGetProp(aSession[nX,2])
-
-      //Valida possiveis divergencias entre a URL do PROPERTIES.JSON e o Appserver.ini
+      //Valida possíveis divergências entre a URL do PROPERTIES.JSON e o Appserver.ini
       If !Empty(aArqProp)
          cURLREST := aArqProp[1] //URL Servico REST
          cRootCnt := aArqProp[2]
-
-         //Identifica a URL correspondente ao ambiente que esta sendo avaliado
+         //Identifica a URL correspondente ao ambiente que está sendo avaliado
          nPos := aScan( aEnvREST, { |x| x[2] ==  SubStr( cURLREST, (Len(cURLREST)-Len(x[2])) + 1 ) } ) 
-
-         //Verifica se a porta do servico REST esta contida na URL do Arquivo Properties.json
+         //Verifica se a porta do serviço REST está contida na URL do Arquivo Properties.json
          If !(cRestPort $ cURLREST)
             lArqProp := .F.
             aAdd( aErr, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0031) +" ("+ cRestPort + ") "+ OemToAnsi(STR0032) }) //"PROPERTIES_JSON -" # "A porta do serviço REST" # "não está contido na URL do atributo 'baseUrl'."
@@ -489,40 +470,38 @@ If nNumInst > 0
                aAdd( aErr, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0033) }) //"PROPERTIES_JSON -" # "O atributo 'rootContext' não está informado dentro de duas barras (//)."
             EndIf
             
-            //Verifica se existe conteudo valido alem das barras
+            //Verifica se existe conteúdo valido além das barras
             cCnt := StrTran(cRootCnt, "/", "")
             If Empty( cCnt )
-               aAdd( aWarn, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0034) }) //"PROPERTIES_JSON -" # "O atributo 'rootContext' nao esta informado ou nao possui conteudo valido."
+               aAdd( aWarn, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0034) }) //"PROPERTIES_JSON -" # "O atributo 'rootContext' nao esta informado ou não possui conteúdo valido."
             Else
                //Verifica se o contexto do arquivo corresponde ao que esta indicado no appserver
                If nPos > 0 .And. !(cCnt == aEnvREST[nPos,3])
                   //"PROPERTIES_JSON -" # "A empresa indicada no atributo 'rootContext'" # "está divergente de" # "indicada sessão: # "do arquivo APPSERVER.INI"
-                  aAdd( aWarn, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0035) + " (" + cCnt + ") " + OemToAnsi(STR0036) +" (" + aEnvREST[nPos,3] + ") " + OemToAnsi(STR0037) +" "+  aEnvREST[nPos,1] +" "+ OemToAnsi(STR0038) }) 
+                  aAdd( aWarn, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0035) + " (" + cCnt + ") " + OemToAnsi(STR0036) +" (" + aEnvREST[nPos,3] + ") " + OemToAnsi(STR0037) +" "+  aEnvREST[nPos,1] +" "+ OemToAnsi(STR0038) })
                EndIf
             EndIf
          Else
-            aAdd( aWarn, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0034) }) //"PROPERTIES_JSON -" # "O atributo 'rootContext' nao esta informado ou nao possui conteudo valido."
+            aAdd( aWarn, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0034) }) //"PROPERTIES_JSON -" # "O atributo 'rootContext' não está informado ou não possui conteúdo válido."
          EndIf
       Else
          lArqProp := .F.
-         aAdd( aErr, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0040) }) //"PROPERTIES_JSON -" # "Nao foi possivel obter os dados. Verifique se o arquivo existe ou se os dados estao corretos."
+         aAdd( aErr, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0040) }) //"PROPERTIES_JSON -" # "Não foi possível obter os dados. Verifique se o arquivo existe ou se os dados estão corretos."
       EndIf
       
-      //Checa se existe divergencia entre o complemento da URL REST com a URL do ambiente
+      //Checa se existe divergência entre o complemento da URL REST com a URL do ambiente
       If nPos > 0
          cCompURL := SubStr( cURLREST, (Len(cURLREST)-Len(aEnvREST[nPos,2])) + 1 )
-
          If !cCompURL == aEnvREST[nPos,2]
             lArqProp := .F.
-            //"PROPERTIES_JSON -" #O complemento da URL no atributo 'baseUrl'" # "está divergente de" # "indicada sessao:" # "do arquivo APPSERVER.INI"
+            //"PROPERTIES_JSON -" #O complemento da URL no atributo 'baseUrl'" # "está divergente de" # "indicada sessão:" # "do arquivo APPSERVER.INI"
             aAdd( aErr, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0041) +" ("+ cURLREST +") "+ OemToAnsi(STR0036) +" ("+ aEnvREST[nPos,2] +") "+ OemToAnsi(STR0037) +" "+ AllTrim(aEnvREST[nPos,1]) +" "+ OemToAnsi(STR0038) })
          EndIf
       Else
          lArqProp := .F.
-         //"PROPERTIES_JSON -" # "O complemento da URL no atributo 'baseUrl'" # "está divergente de" # "indicada sessao:" # "do arquivo APPSERVER.INI"
+         //"PROPERTIES_JSON -" # "O complemento da URL no atributo 'baseUrl'" # "está divergente de" # "indicada sessão:" # "do arquivo APPSERVER.INI"
          aAdd( aErr, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0041) +" ("+ cURLREST +") "+ OemToAnsi(STR0036) +" ("+ aEnvREST[nX,2] +") "+ OemToAnsi(STR0037) +" "+ AllTrim(aEnvREST[nX,1]) +" "+ OemToAnsi(STR0038) })
       EndIf
-
       aAdd( aLog, { OemToAnsi(STR0042) +" "+ cValToChar(nX) +" "+ OemToAnsi(STR0049) +" "+ cValToChar(nNumInst) }) //"Instâncias Meu RH: " # "de"
       aAdd( aLog, { "" })
       aAdd( aLog, { OemToAnsi(STR0043) + Replicate(".", 24-Len(STR0043)) + ": " + cStatus }) //"Status"
@@ -533,8 +512,7 @@ If nNumInst > 0
       aAdd( aLog, { OemToAnsi(STR0048) + Replicate(".", 24-Len(STR0048)) + ": " + If( lArqProp, cOK, cErr) }) //"Arquivo Properties.json"
 
    Next nX
-
-   //Verifica se o executavel da impressora esta na pasta do AppServer
+   //Verifica se o executável da impressora está na pasta do AppServer
    getAppPath(@cPath)
 
    If !File( cPath + "\" + cPrint )
@@ -556,10 +534,10 @@ IMPLOG(aLogG, aWarnG, aErrG)
 Return
 
 /*/{Protheus.doc} GetFunData()
-- Função Responsável por validar os dados do funcionario a partir do CPF e senha do Meu RH
+- Função Responsável por validar os dados do funcionário a partir do CPF e senha do Meu RH
 @author:	Marcelo Silveira
 @since:		31/12/2020
-@param:		cIdFunc - CPF do funcionario
+@param:		cIdFunc - CPF do funcionário
             cPwdFunc - Senha do Meu RH
 /*/
 Static Function GetFunData(cIdFunc, cPwdFunc)
@@ -568,6 +546,7 @@ Local nX             := 0
 Local nY             := 0
 Local nNumSRA        := 0
 
+Local cMsg           := ""
 Local cTitCpo        := ""
 Local cUser          := ""
 Local cUserID        := ""
@@ -578,7 +557,10 @@ Local cSituacao      := ""
 Local cOk            := OemToAnsi(STR0019) //"OK"
 Local cErr           := OemToAnsi(STR0020) //"Existe não-conformidade!"
 Local cPPAccess      := GetMv("MV_ACESSPP",,"")
+Local cArqRDZ        := "MSRELRDZ.INI"
+Local cPath          := GetSrvProfString("RootPath", '')
 
+Local aRDZ           := {}
 Local aFunc          := {}
 Local aLog           := {}
 Local aErr           := {}
@@ -594,6 +576,7 @@ Local lPwdOk         := .F.
 Local lOkRD0         := .F.
 Local lOkRJD         := .F.
 Local lOkAI3         := .F.
+Local lOkRDZ         := .F.
 
 DEFAULT cIdFunc      := ""
 DEFAULT cPwdFunc     := ""
@@ -601,6 +584,17 @@ DEFAULT cPwdFunc     := ""
 lClose   := .T.
 cIdFunc  := AllTrim(cIdFunc)
 cPwdFunc := AllTrim(cPwdFunc)
+If !File( cPath + "\" + cArqRDZ )
+   cMsg := OemToAnsi(STR0070) +" "+ OemToAnsi(STR0203) +" '"+ cArqRDZ +"' " + OemToAnsi(STR0203) + " " //"O arquivo:" # "Não foi localizado no 'rootpath' desse ambiente."
+   cMsg += OemToAnsi(STR0205) //"Sem essa informação não será possível criar o relacionamento entre o funcionário e o participante, e o acesso ao Meu RH não será possível."
+   cMsg += OemToAnsi(STR0206) //"Para mais informações consulte o(s) link(s) abaixo:"
+   cMsg += CRLF
+   cMsg += "=> https://tdn.totvs.com/x/ZMimHQ""
+   cMsg += CRLF
+   cMsg += "=> https://centraldeatendimento.totvs.com/hc/pt-br/articles/360059317533-MP-PORTAL-GCH-Arquivo-MSRELRDZ-ini"
+   aAdd( aErr, { OemToAnsi(cMsg) }) 
+
+EndIf
 
 //Obtem os dados do Funcionario
 aFunc := GetSRA(cIdFunc, cPwdFunc)
@@ -617,8 +611,7 @@ If nNumSRA > 0
 
       cFilUSER := aFunc[nX, 1]
       cMatUSER := aFunc[nX, 2]
-
-      //Situacao do vinculo
+      //Situação do vínculo
       Do Case
          Case Empty(aFunc[nX, 5]) .Or. aFunc[nX, 5] == " "
             cSituacao := OemToAnsi(STR0065) //"Normal"
@@ -631,8 +624,7 @@ If nNumSRA > 0
          Case aFunc[nX, 5] == "F"
             cSituacao := OemToAnsi(STR0069) //"Férias"
       EndCase
-
-      //Busca informacoes do Cadastro de Participantes
+      //Busca informações do Cadastro de Participantes
       dbSelectArea("RD0")
       RD0->( dbSetOrder(6) ) //RD0_FILIAL+RD0_CIC+RD0_CODIGO
       
@@ -645,44 +637,52 @@ If nNumSRA > 0
 
          If Empty( cUserAI3 )
             
-            cTitCpo := fGetTitle("RD0_PORTAL")            
-
-            //"PARTICIPANTE -" # "O campo" # "não está informado no cadastro de Participantes"
-            aAdd( aErr, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0073) +" '"+ cTitCpo +"' (RD0_PORTAL) " + OemToAnsi(STR0100) }) 
+            cTitCpo := fGetTitle("RD0_PORTAL")
+            //"PARTICIPANTE -" # "O campo" # "não está informado no Cadastro de Participantes"
+            aAdd( aErr, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0073) +" '"+ cTitCpo +"' (RD0_PORTAL) " + OemToAnsi(STR0100) })
             lOkRD0 := .F.
          EndIf
       Else
-         aAdd( aErr, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0072) }) //"PARTICIPANTE -" # "Funcionário nao possui vinculo no cadastro de Participantes"
+         aAdd( aErr, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0072) }) //"PARTICIPANTE -" # "Funcionário não possui vinculo no Cadastro de Participantes"
          lOkRD0 := .F.
       EndIf
 
+      //Verifica os dados da tabela RDZ
+      If lOkRD0
+         fGetRDZ(cFilUSER, cMatUSER, cCodRD0, @aRDZ)
+         If Empty(aRDZ)
+            //"PARTICIPANTE -" # "O vínculo entre o funcionário e o participante não foi localizado na tabela 'Pessoas x Entidades' do Meu RH (Tabela RDZ)"
+            aAdd( aErr, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0207) })
+         Else
+            lOkRDZ := .T.
+         EndIf
+      EndIf
+
       //Verifica a Filial do usuario do Portal que esta informada no cadastro de Participantes
-      If lRelease27 
-         If lCpoRD0 
+      If lRelease27
+         If lCpoRD0
             cFilAI3 := RD0->RD0_FILRH
 
             If Empty(RD0->RD0_FILRH)
 
                cTitCpo := fGetTitle("RD0_FILRH")
 
-               //"PARTICIPANTE -" # "O campo" # "não está informado no cadastro de Participantes"
-               aAdd( aWarn, { OemToAnsi(STR0070) +" "+  OemToAnsi(STR0073) +" '"+ cTitCpo +"' (RD0_FILRH) " + OemToAnsi(STR0100) }) 
+               //"PARTICIPANTE -" # "O campo" # "não está informado no Cadastro de Participantes"
+               aAdd( aWarn, { OemToAnsi(STR0070) +" "+  OemToAnsi(STR0073) +" '"+ cTitCpo +"' (RD0_FILRH) " + OemToAnsi(STR0100) })
 
             ElseIf !(cFilAI3 == cFilUSER)
                
                cTitCpo := fGetTitle("RD0_FILRH")
-
-               //"PARTICIPANTE -" # "A filial do campo" # "no cadastro de Participantes é diferente da filial do funcionário"
+               //"PARTICIPANTE -" # "A filial do campo" # "no Cadastro de Participantes é diferente da filial do funcionário"
                aAdd( aWarn, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0074) +" '"+ cTitCpo +"' (RD0_FILRH = "+ AllTrim(cFilAI3) +") " + OemToAnsi(STR0075) + " ("+ AllTrim(cFilUSER) +")" })
             
             EndIf
          Else
-            //"PARTICIPANTE -" # "Não existe o campo (RD0_FILRH) no cadastro de Participantes."
-            aAdd( aWarn, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0071) }) 
+            //"PARTICIPANTE -" # "Não existe o campo (RD0_FILRH) no Cadastro de Participantes."
+            aAdd( aWarn, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0071) })
          EndIf
       EndIf
-
-      //Busca informacoes do usuario do portal
+      //Busca informações do usuário do portal
       If !Empty(cUserAI3)  
          dbSelectArea("AI3")
          AI3->(dbSetOrder(1))
@@ -705,20 +705,20 @@ If nNumSRA > 0
                
                cTitCpo := fGetTitle("AI3_USRSIS")
                
-               //"USUARIO_PORTAL -" # "O usuário" # "informado no cadastro de participantes não possui Usuário Interno informado na tabela de usuários do SIGATCF - Campo" # "da Tabela AI3"
-               aAdd( aErr, { OemToAnsi(STR0077) +" "+ OemToAnsi(STR0078) +" ("+ cUserAI3 +") "+ OemToAnsi(STR0079) +" '"+ cTitCpo +"' (AI3_USRSIS) " + OemToAnsi(STR0099) }) 
+               //"USUARIO_PORTAL -" # "O usuário" # "informado no Cadastro de Participantes não possui Usuário Interno informado na tabela de usuários do SIGATCF - Campo" # "da Tabela AI3"
+               aAdd( aErr, { OemToAnsi(STR0077) +" "+ OemToAnsi(STR0078) +" ("+ cUserAI3 +") "+ OemToAnsi(STR0079) +" '"+ cTitCpo +"' (AI3_USRSIS) " + OemToAnsi(STR0099) })
                lOkAI3 := .F.
             Else
                //Verifica se o login foi realizado com sucesso
                cUser := If( !Empty(cLoginRD0), AllTrim(cLoginRD0), cIdFunc )
-               UnifiedLoginRH(@lPwdOk, cUser, cPwdFunc, "2", cPPAccess, .T. ,,, @cMsgErr)          
+               UnifiedLoginRH(@lPwdOk, cUser, cPwdFunc, "2", cPPAccess, .T. ,,, @cMsgErr)
                If !lPwdOk
                   aAdd( aErr, { "LOGIN - " + cMsgErr })
                EndIf
             EndIf
          Else
-            //"PARTICIPANTE -" # "O usuário" # "informado no cadastro de participantes não foi localizado na tabela de usuários do SIGATCF - Tabela AI3"
-            aAdd( aErr, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0078) +" ("+ cUserAI3 +") "+ OemToAnsi(STR0104) }) 
+            //"PARTICIPANTE -" # "O usuário" # "informado no Cadastro de Participantes não foi localizado na tabela de usuários do SIGATCF - Tabela AI3"
+            aAdd( aErr, { OemToAnsi(STR0070) +" "+ OemToAnsi(STR0078) +" ("+ cUserAI3 +") "+ OemToAnsi(STR0104) })
             lOkRD0 := .F.
          EndIf
       EndIf
@@ -738,8 +738,7 @@ If nNumSRA > 0
                   aAdd( aErr, { OemToAnsi(STR0080) +" "+ OemToAnsi(STR0081) +" ("+ cUserAI3 +") " + OemToAnsi(STR0082) })
                   lOkRJD := .F.
                EndIf
-
-               //Verifica se foram carregados somente os servicos basicos
+               //Verifica se foram carregados somente os serviços básicos
                If lOkRJD .And. Len(aServices) == 3
 
                   For nY := 1 To Len(aServices)
@@ -749,8 +748,8 @@ If nNumSRA > 0
                   Next nY
 
                   If lDefault
-                     //"PERMISSAO -" # "Apenas os serviços essenciais estão disponíveis. Se não estiver correto, verifique as permissões do usuário" # "na tabela de permissões do Meu RH (Tabela RJD)"                 
-                     aAdd( aWarn, { OemToAnsi(STR0080) +" "+ OemToAnsi(STR0083) +" ("+ cUserAI3 +") "+ OemToAnsi(STR0082)  }) 
+                     //"PERMISSAO -" # "Apenas os serviços essenciais estão disponíveis. Se não estiver correto, verifique as permissões do usuário" # "na tabela de permissões do Meu RH (Tabela RJD)"
+                     aAdd( aWarn, { OemToAnsi(STR0080) +" "+ OemToAnsi(STR0083) +" ("+ cUserAI3 +") "+ OemToAnsi(STR0082)  })
                   EndIf
                EndIf
 
@@ -764,39 +763,56 @@ If nNumSRA > 0
 
       If nX > 1
          aAdd( aLog, { "" })
-         aAdd( aLog, { Replicate(".", 27) }) //"..........................."
+         aAdd( aLog, { Replicate(".", 30) }) //"..........................."
       EndIf
 
       aAdd( aLog, { "" })
       aAdd( aLog, { OemToAnsi(STR0085) +" "+ cValToChar(nX) +" "+ OemToAnsi(STR0049) +" "+ cValToChar(nNumSRA) }) //"Vínculo: " # "de"
       aAdd( aLog, { "" })
       aAdd( aLog, { "*** " + OemToAnsi(STR0086) }) //"Dados do funcionário"
-      aAdd( aLog, { Replicate(".", 27) }) //"..........................."
-      aAdd( aLog, { OemToAnsi(STR0087) + Replicate(".", 27-Len(STR0087)) + ": " + cFilUSER }) //"Filial"
-      aAdd( aLog, { OemToAnsi(STR0088) + Replicate(".", 27-Len(STR0088)) + ": " + cMatUSER }) //"Matrícula"
-      aAdd( aLog, { OemToAnsi(STR0089) + Replicate(".", 27-Len(STR0089)) + ": " + cCodRD0 }) //"Código Participante"
-      aAdd( aLog, { OemToAnsi(STR0090) + Replicate(".", 27-Len(STR0090)) + ": " + cSituacao }) //Situação do Funcionário
+      aAdd( aLog, { Replicate(".", 30) }) //"..........................."
+      aAdd( aLog, { OemToAnsi(STR0087) + Replicate(".", 30-Len(STR0087)) + ": " + cFilUSER }) //"Filial"
+      aAdd( aLog, { OemToAnsi(STR0088) + Replicate(".", 30-Len(STR0088)) + ": " + cMatUSER }) //"Matrícula"
+      aAdd( aLog, { OemToAnsi(STR0090) + Replicate(".", 30-Len(STR0090)) + ": " + cSituacao }) //Situação do Funcionário
+      aAdd( aLog, { OemToAnsi(STR0089) + Replicate(".", 30-Len(STR0089)) + ": " + cCodRD0 }) //"Código Participante"
+      aAdd( aLog, { OemToAnsi(STR0212) + Replicate(".", 30-Len(STR0212)) + ": " + cUserAI3}) //"Código Usuário Portal"
+
+      If lCpoRD0
+         aAdd( aLog, { OemToAnsi(STR0213) + Replicate(".", 30-Len(STR0213)) + ": " + cFilAI3}) //"Código Filial Usuário Portal"
+      EndIf
+
+      If lOkRDZ
+         aAdd( aLog, { "" })
+         aAdd( aLog, { "*** " + OemToAnsi(STR0208) }) //"Dados do vínculo funcionário x Partipante"
+         aAdd( aLog, { OemToAnsi(STR0209) + Replicate(".", 30-Len(STR0209)) + ": " + aRDZ[2] }) //"Entidade"
+         aAdd( aLog, { OemToAnsi(STR0210) + Replicate(".", 30-Len(STR0210)) + ": " + aRDZ[3] }) //"Código da Entidade"
+         aAdd( aLog, { OemToAnsi(STR0211) + Replicate(".", 30-Len(STR0211)) + ": " + aRDZ[4] }) //"Filial da Entidade"
+      EndIf
+
       aAdd( aLog, { "" })
       aAdd( aLog, { "" })
 
       aAdd( aLog, { "*** " + OemToAnsi(STR0091) }) //"Resultado"
       aAdd( aLog, { Replicate(".", 27) }) // "..........................."
-      aAdd( aLog, { OemToAnsi(STR0092) + Replicate(".", 27-Len(STR0092)) + ": " + If( lOkRD0, cOK, cErr) }) //"Cadastro Participantes"
+      aAdd( aLog, { OemToAnsi(STR0092) + Replicate(".", 30-Len(STR0092)) + ": " + If( lOkRD0, cOK, cErr) }) //"Cadastro Participantes"
       If lOkRD0
-         aAdd( aLog, { OemToAnsi(STR0093) + Replicate(".", 27-Len(STR0093)) + ": " + If( lOkAI3, cOK, cErr) }) //"Cadastro Usuários"
+         aAdd( aLog, { OemToAnsi(STR0093) + Replicate(".", 30-Len(STR0093)) + ": " + If( lOkAI3, cOK, cErr) }) //"Cadastro Usuários"
       EndIf
+      If lOkRDZ
+         aAdd( aLog, { OemToAnsi(STR0095) + Replicate(".", 30-Len(STR0095)) + ": " + If( lOkRDZ, cOK, cErr) }) //Cadastro Funcionario x Participantes"
+      EndIf      
       If lOkRD0 .And. lOkAI3
-         aAdd( aLog, { OemToAnsi(STR0094) + Replicate(".", 27-Len(STR0094)) + ": " + If( lPwdOk, cOK, cErr) }) //"Login Meu RH"
+         aAdd( aLog, { OemToAnsi(STR0094) + Replicate(".", 30-Len(STR0094)) + ": " + If( lPwdOk, cOK, cErr) }) //"Login Meu RH"
       EndIf
       If lOkAI3
-         aAdd( aLog, { OemToAnsi(STR0095) + Replicate(".", 27-Len(STR0095)) + ": " + If( lOkRJD, cOK, cErr) }) //Cadastro Permissões"
+         aAdd( aLog, { OemToAnsi(STR0095) + Replicate(".", 30-Len(STR0095)) + ": " + If( lOkRJD, cOK, cErr) }) //Cadastro Permissões"
       EndIf
       
       If lOkAI3 .And. lOkRJD
          aAdd( aLog, { "" })
          aAdd( aLog, { "" })
          aAdd( aLog, { "*** " + OemToAnsi(STR0096) }) //"Serviços habilitados para este funcionário"
-         aAdd( aLog, { Replicate(".", 27) }) // "..........................."
+         aAdd( aLog, { Replicate(".", 30) }) // "..........................."
          For nY := 1 To Len(aServices)
             aAdd( aLog, { "-> " + AllTrim(aServices[nY, 4]) })
          Next nY
@@ -872,7 +888,7 @@ aArqsMHR := {  "GPEM580.PRX", ;
                "WSGPE040.PRW", ;
                "WSGPE080.PRW", ;
                "WSORG010.PRW", ;
-               "WSPORTAL01.PRX"}
+               "WSPORTAL01.PRX", ;
                "APIGETSTRUCTURE.PRW" }
 
 For nX := 1 To Len(aArqsMHR)
@@ -888,7 +904,7 @@ Next nX
 Return( aRet )
 
 /*/{Protheus.doc} fGetPar()
-- Função Responsável por retornar os dados de parametros usados no Meu RH
+- Função Responsável por retornar os dados de parâmetros usados no Meu RH
 @author:	Marcelo Silveira
 @since:		31/12/2020
 @param:
@@ -908,11 +924,9 @@ aParsMHR := {  {"MV_ACESSPP",  ""}, ; //https://tdn.totvs.com/x/dNlc
                {"MV_NVLAPR",  .F.}, ; //https://tdn.totvs.com/x/a6yGIQ
                {"MV_TCFVREN", "N"}, ; //https://tdn.totvs.com/x/2lh9Ig
                {"MV_MCIGUAL", "N"}, ;
-               {"MV_DIAS2501","N"}, ;
                {"MV_HORASDE", "N"}, ;
                {"MV_PONMES",   ""}, ;
                {"MV_PAPONTA",  ""}, ;
-               {"MV_PROJSRF", .T.}, ;
                {"MV_DSOLFER",  30}, ;
                {"MV_MRHFERP", .T.}, ; 
                {"MV_GETMAUT", "S"}, ;  
@@ -943,7 +957,7 @@ Next nX
 Return( aRet )
 
 /*/{Protheus.doc} fGetAppInfo()
-- Função Responsável por retornar os dados do arquivo de configuracao AppServer.ini
+- Função Responsável por retornar os dados do arquivo de configuração AppServer.ini
 @author:	Marcelo Silveira
 @since:		31/12/2020
 @param:
@@ -977,8 +991,7 @@ If nRet == 0
       If cStrAux == ";"
          lDeleted := .T.
       EndIf
-
-      //Nao considera linhas deletadas e o retorno da linha
+      //Não considera linhas deletadas e o retorno da linha
       If !lDeleted 
          
          If ( !(cAsc == 10) .And. !(cAsc == 13) )
@@ -1007,8 +1020,7 @@ If nRet == 0
             EndIf
          EndIf
       EndIf
-
-      //Reinicia a variavel para poder avaliar a proxima linha
+      //Reinicia a variável para poder avaliar a próxima linha
       If lDeleted .And. cAsc == 10
          lDeleted := .F.
       EndIf
@@ -1020,7 +1032,7 @@ EndIf
 Return(aSessions)
 
 /*/{Protheus.doc} fGetProp()
-- Função Responsável por ler o conteudo do arquivo properties.json
+- Função Responsável por ler o conteúdo do arquivo properties.json
 @author:	Marcelo Silveira
 @since:		31/12/2020
 @param:     @cPathFile
@@ -1062,7 +1074,7 @@ EndIf
 Return( aRet )
 
 /*/{Protheus.doc} GetSRA()
-- Função Responsável por retornar os dados do funcionario
+- Função Responsável por retornar os dados do funcionário
 @author:	Marcelo Silveira
 @since:		31/12/2020
 @param:		cIdFunc - CPF do funcionario
@@ -1145,7 +1157,7 @@ fInfo( @aInfo, cFilAnt )
 //------------------------//
 
 AutoGrLog( OemToAnsi(STR0201) +" "+ AllTrim(aInfo[2]) +" / "+ OemToAnsi(STR0202) +" "+ AllTrim(aInfo[1]) ) //"Grupo de empresa:" # "Filial:"
-AutoGrLog( OemToAnsi(STR0200) +" "+ cValToChar(dDatabase) +" - "+ cValToChar(Time()) ) //"Data/Hora:" # 
+AutoGrLog( OemToAnsi(STR0200) +" "+ cValToChar(dDatabase) +" - "+ cValToChar(Time()) ) //"Data/Hora:" #
 AutoGrLog("") 
 AutoGrLog("") 
 AutoGrLog( OemToAnsi(STR0051) ) //"Início do LOG"
@@ -1180,7 +1192,7 @@ For nX := 1 To Len(aLogG)
          AutoGrLog( aWarnG[nX, 1, nY, 1] )
       Next nY        
       AutoGrLog("") 
-      AutoGrLog( OemToAnsi(STR0055) ) //"Observação: Alertas podem nÃo impedir o funcionamento do sistema, mas podem impactar no resultado esperado."
+      AutoGrLog( OemToAnsi(STR0055) ) //"Observação: Alertas podem não impedir o funcionamento do sistema, mas podem impactar no resultado esperado."
    EndIf
 
 Next nX
@@ -1201,8 +1213,7 @@ AutoGrLog( OemToAnsi(STR0059) + Replicate(".", 20-Len(STR0059)) + ": " + TCGetBu
 AutoGrLog( OemToAnsi(STR0060) + Replicate(".", 20-Len(STR0060)) + ": " + DTOS(aDataEnv[4]) ) //"Build LIB"
 AutoGrLog( OemToAnsi(STR0061) + Replicate(".", 20-Len(STR0061)) + ": " + GetEnvServer() +" / "+ GetRPORelease() ) //Environment/Release
 AutoGrLog("")
-
-AutoGrLog( OemToAnsi(STR0062) ) //"Parametros verificados no Meu RH"
+AutoGrLog( OemToAnsi(STR0062) ) //"Parâmetros verificados no Meu RH"
 For nX := 1 To Len(aDataPar)
    AutoGrLog( aDataPar[nX,1] +" => "+ aDataPar[nX,2] )
 Next nX
@@ -1225,7 +1236,7 @@ EndIf
 Return()
 
 /*/{Protheus.doc} fGetTitle()
-- Função Responsável por retornar o titulo de um campo da tabela SX3 conforme o idioma
+- Função Responsável por retornar o título de um campo da tabela SX3 conforme o idioma
 @author:	Marcelo Silveira
 @since:		31/12/2020
 @param:		cCpoSX3 - campo da tabela SX3
@@ -1253,12 +1264,12 @@ EndIf
 Return( cTit )
 
 /*/{Protheus.doc} fAvalPermission()
-- Função Responsável por pesquisar e avaliar as permissoes do usuario
+- Função Responsável por pesquisar e avaliar as permissões do usuário
 @author:	Marcelo Silveira
 @since:		31/12/2020
-@param:		cFilUSER - Filial do usuario
-            cLoginRD0 - Login do Usuario
-            cCodRD0 - Codigo do Participante
+@param:		cFilUSER - Filial do usuário
+            cLoginRD0 - Login do Usuário
+            cCodRD0 - Código do Participante
 /*/
 Static Function fAvalPermission(cFilUSER, cLoginRD0, cCodRD0)
 
@@ -1287,7 +1298,7 @@ Return( aRet )
 @author:	Marcelo Silveira
 @since:		31/12/2020
 @param:		cBase - String completa
-            cRemove - Caracteres que serao removidos da string
+            cRemove - Caracteres que serão removidos da string
 /*/
 Static Function fRemStr( cBase, cRemove )
 
@@ -1312,7 +1323,7 @@ EndIf
 Return( cRet )
 
 /*/{Protheus.doc} fMRhMail()
-- Responsável por checar se as configurações de email estão habilitadas.
+- Responsável por checar se as configurações de e-mail estão habilitadas.
 @author:	Henrique Ferreira
 @since:		21/01/2021
 @param:		
@@ -1377,3 +1388,61 @@ aAdd( aWarnG, {aWarn} )
 IMPLOG(aLogG, aWarnG, aErrG)
 
 Return .T.
+
+/*/{Protheus.doc} fGetRDZ()
+- Função Responsável por remover de uma string uma cadeia de caracteres
+@author:	Marcelo Silveira
+@since:		21/01/2021
+@param:		cBase - String completa
+            cRemove - Caracteres que serao removidos da string
+/*/
+Static Function fGetRDZ( cFilSRA, cMatSRA, cParticipantID, aUser )
+
+Local _TabRD0        := ""
+Local _TabRDZ        := "" 
+Local _TabSRA        := ""
+Local cWhere			:= ""
+Local cQuery			:= GetNextAlias()
+
+cWhere := "%"
+cWhere += " AND SRA.RA_MAT = '" + cMatSRA + "'"
+cWhere += "%"
+
+_TabRD0 := "%" + RetFullName("RD0", cEmpAnt) + "%"
+_TabRDZ := "%" + RetFullName("RDZ", cEmpAnt) + "%" 
+_TabSRA := "%" + RetFullName("SRA", cEmpAnt) + "%"
+
+BEGINSQL ALIAS cQuery
+   COLUMN RA_ADMISSA AS DATE
+   
+   SELECT
+      RDZ_CODRD0,
+      RDZ_CODENT,
+      RDZ_FILENT,
+      RDZ_ENTIDA
+   FROM %Exp:_TabRD0% RD0
+   INNER JOIN %Exp:_TabRDZ% RDZ
+   ON RDZ.RDZ_CODRD0 = RD0.RD0_CODIGO
+   INNER JOIN %Exp:_TabSRA% SRA
+   ON RTRIM(RDZ.RDZ_CODENT) = RTRIM( SRA.RA_FILIAL + SRA.RA_MAT )
+   WHERE 
+      RD0.RD0_FILIAL = %xFilial:RD0% AND
+      RD0.RD0_CODIGO = %exp:cParticipantID% AND
+      RD0.%notDel% AND
+      RDZ.%notDel% AND
+      SRA.%notDel%
+      %exp:cWhere%
+ENDSQL	
+
+While (cQuery)->(!EoF())
+   aAdd(aUser, (cQuery)->RDZ_CODRD0) 	         //1 - Codigo Participante
+   aAdd(aUser, AllTrim((cQuery)->RDZ_ENTIDA)) 	//2 - Entidade
+   aAdd(aUser, AllTrim((cQuery)->RDZ_FILENT)) 	//3 - Filial da Entidade
+   aAdd(aUser, (cQuery)->RDZ_CODENT) 	         //4 - Entidade (Filial + Matricula)
+      
+	(cQuery)->(DBSkip())
+EndDo
+
+(cQuery)->(DBCloseArea())
+
+Return()
