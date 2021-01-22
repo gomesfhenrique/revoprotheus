@@ -497,7 +497,15 @@ If nNumInst > 0
          //Verifica se a porta do serviço REST está contida na URL do Arquivo Properties.json
          If !(cRestPort $ cURLREST)
             lArqProp := .F.
-            aAdd( aErr, { OemToAnsi(STR0030) +" "+ OemToAnsi(STR0031) +" ("+ cRestPort + ") "+ OemToAnsi(STR0032) }) //"PROPERTIES_JSON -" # "A porta do serviço REST" # "não está contido na URL do atributo 'baseUrl'."
+            cMsg := OemToAnsi(STR0030) +" HOST: (" + cURL + ") "
+            cMsg += OemToAnsi(STR0031) +" ("+ cRestPort + ") "+ OemToAnsi(STR0032) + " " //"PROPERTIES_JSON -" # "A porta do serviço REST" # "não está contido na URL do atributo 'baseUrl'." 
+            cMsg += OemToAnsi(STR0305) +" " //Na configuração do arquivo properties.json a tag deve se incluida com o endereço do REST, exemplo: http://10.173.3.216:4141/rest50"
+            cMsg += OemToAnsi(STR0206) //"Para mais informações consulte o(s) link(s) abaixo:"
+            cMsg += CRLF
+            cMsg += "=> https://tdn.totvs.com/x/RMmmHQ"
+            cMsg += CRLF
+            cMsg += "=> https://centraldeatendimento.totvs.com/hc/pt-br/articles/360044715514-MP-MEU-RH-Como-configurar-o-APPSERVER-INI-PROPERTIES-JSON-e-URL-do-QRCODE-para-acesso-ao-MEU-RH"
+            aAdd( aErr, { OemToAnsi(cMsg) }) 
          EndIf
 
          If !Empty(cRootCnt)
@@ -600,7 +608,7 @@ Local cOk            := OemToAnsi(STR0019) //"OK"
 Local cErr           := OemToAnsi(STR0020) //"Existe não-conformidade!"
 Local cPPAccess      := GetMv("MV_ACESSPP",,"")
 Local cArqRDZ        := "MSRELRDZ.INI"
-Local cPath          := GetSrvProfString("RootPath", '')
+Local cPath          := GetSrvProfString("STARTPATH","")
 
 Local aRDZ           := {}
 Local aFunc          := {}
@@ -1325,7 +1333,7 @@ DEFAULT cFilUSER  := ""
 DEFAULT cLoginRD0 := ""
 DEFAULT cCodRD0   := ""
 
-If !Empty(cFilUSER) .And. !Empty(cLoginRD0) .And. !Empty(cCodRD0)
+If !Empty(cFilUSER) .And. (!Empty(cLoginRD0) .Or. !Empty(cCodRD0) )
    aServices := fPermission(cFilUSER, cLoginRD0, cCodRD0)
 
    For nZ := 1 To Len(aServices)
