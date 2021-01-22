@@ -111,8 +111,8 @@
 #define STR0104 "informado no Cadastro de Participantes não foi localizado na tabela de usuários do SIGATCF - Tabela AI3"
 #define STR0105 "Serviço ainda não disponível!"
 #define STR0106 "Atenção"
-#define STR0107 "Seção E-mail"
-#define STR0108 "Seção E-mail não encontrada no seu AppServer.Ini"
+#define STR0107 "Seção[MAIL]"
+#define STR0108 "Seção[MAIL] não encontrada no seu AppServer.Ini"
 #define STR0109 "Dados de E-mail"
 #define STR0110 "Parâmetro MV_EMCONTA não está configurado"
 #define STR0111 "Parâmetro MV_EMSENHA não está configurado"
@@ -120,7 +120,7 @@
 #define STR0113 "O Documento a seguir orienta na configuração dos e-mails/workflows"
 #define STR0114 "O parâmetro MV_RELAUTH está habilitado. Nesse caso o servidor SMTP usará autenticação"
 #define STR0115 "O parâmetro MV_RELAUTH está desabilitado. Nesse caso o servidor SMTP não usará autenticação"
-#define STR0116 "Email Para:"
+#define STR0116 "Validar Serviço"
 #define STR0117 "Não foi possível enviar o email para o destinatário."
 #define STR0118 "Informe o email de destino."
 #define STR0119 "Não foi possível se conectar no servidor SMTP. Verifique se o usuário(Email) e senha estão corretos."
@@ -129,10 +129,12 @@
 #define STR0122 "Parâmetro existe na base de dados."
 #define STR0123 "Parâmetro não existe na base de dados."
 #define STR0124 "Documentação: "
+#define STR0125 "Email: "
+#define STR0126 "Dados de Workflow não cadastrados."
 #define STR0300 "Dados de Workflow"
 #define STR0301 "O sistema irá avaliar se está correto o vínculo do funcionário e o respectivo participante ao qual ele está relacionado. Será verificado também se existe alguma inconsistência no Cadastro do Participante para acesso ao Meu RH."
 #define STR0302 "O sistema irá avaliar a configuração do Servidor REST e verificar se existe alguma inconsistência nas instâncias do serviço do Meu RH. Serão avaliados também os arquivos de configuração de cada instância (PROPERTIES.JSON)."
-#define STR0303 "O sistema irá executar uma validação de requisição para o serviço selecionado, para verificar se existe alguma inconsistência na requisição. Será necessário informar um usuário e senha válidos."
+#define STR0303 "O sistema irá executar uma validação de requisição para o serviço selecionado, para verificar se existe alguma inconsistência na requisição. Será necessário informar um endereço de email válido."
 #define STR0304 "O sistema irá avaliar a configuração do Workflow e verificar se existe alguma inconsistência nas instâncias do serviço do Meu RH."
 
 
@@ -151,9 +153,11 @@
 #define STR0211 "Filial da Entidade"
 #define STR0212 "Código Usuário Portal"
 #define STR0213 "Código Filial Usuário Portal"
+#define STR0214 "Análise concluída"
+#define STR0215 "Clique em finalizar para encerrar a operação."
 
 //Fabio - Novas strings a partir do 300
-#define STR0300 ""
+//#define STR0300 ""
 
 //Elaine - Novas strings a partir do 400
 #define STR0400 ""
@@ -173,6 +177,7 @@ Private oSay
 Private lClose       := .T.
 Private lRelease25	:= GetRpoRelease() >= "12.1.025"
 Private lRelease27   := GetRpoRelease() >= "12.1.027"
+
 DEFINE WIZARD oWizard TITLE OemToAnsi(STR0001) ; //"MEU RH - Teste de Serviços"
        HEADER OemToAnsi(STR0002) ; //"Verificação e teste dos serviços do MEU RH"
        MESSAGE OemToAnsi(STR0003) ; //"Checagem de dados e dos serviços necessários para o funcionamento do MEU RH"
@@ -186,15 +191,27 @@ DEFINE WIZARD oWizard TITLE OemToAnsi(STR0001) ; //"MEU RH - Teste de Serviços"
           HEADER OemToAnsi(STR0005) ; //"Selecione o Tipo de análise que será efetuada"
           MESSAGE OemToAnsi(STR0006) ; //"Serão avaliados a configuração do ambiente e a base de dados"
           BACK {|| .T. } ;
-          NEXT {|| .F. } ;
-          FINISH {|| U_RHNPTLOG(nTipo), lClose } ;
+          NEXT {|| U_RHNPTLOG(nTipo), lClose } ;
+          FINISH {|| .F. } ;
           PANEL
    oPanel := oWizard:GetPanel(2)
    @ 30,20 RADIO oTipo VAR nTipo ITEMS aTipos[1],aTipos[2],aTipos[3],aTipos[4] SIZE 65,8 ;
       PIXEL OF oPanel ON CHANGE fGetDetail(oPanel,nTipo)
    fGetDetail(oPanel,nTipo)
+
+   // Última etapa
+   CREATE PANEL oWizard ;
+          HEADER OemToAnsi(STR0214) ; //"Análise concluída"
+          MESSAGE OemToAnsi(STR0215) ; //"Clique em finalizar para encerrar a operação."
+          BACK {|| .T. } ;
+          NEXT {|| .T. } ;
+          FINISH {|| .T. } ;
+          PANEL
+
 ACTIVATE WIZARD oWizard CENTERED
+
 Return
+
 /*/
 {Protheus.doc} fGetDetail()
 Função Responsável por exibir um texto com os detalhes que cada tipo de execução irá processar
@@ -265,11 +282,11 @@ ElseIf nOperation == 2
 ElseIf nOperation == 3
    DEFINE DIALOG oDlg TITLE OemToAnsi(STR0118) FROM 0,0 TO 150,400 PIXEL //"Informe o email de destino.
 
-   @ 35,15 SAY OemToAnsi(STR0116) SIZE 25,8 PIXEL OF oDlg //"EMAIL"
+   @ 35,15 SAY OemToAnsi(STR0125) SIZE 25,8 PIXEL OF oDlg //"EMAIL"
    @ 45,15 MSGET cEmailTo SIZE 80,10 PIXEL OF oDlg
 
-   @ 20,120 BUTTON oButton1 PROMPT "&"+OemToAnsi(STR0116) ; //Email Para:
-   ACTION ( fMRhMail(cEmailTo), oDlg:End() ) SIZE 70,15 OF oDlg  PIXEL WHEN (!Empty(cEmailTo))
+   @ 20,120 BUTTON oButton1 PROMPT "&"+OemToAnsi(STR0116) ; //Validar Serviço:
+   ACTION ( fMRhMail(Lower(cEmailTo)), oDlg:End() ) SIZE 70,15 OF oDlg  PIXEL WHEN (!Empty(cEmailTo))
 
    @ 40,120 BUTTON oButton2 PROMPT "&"+OemToAnsi(STR0017) ; //"Fechar"
    ACTION (oDlg:End(), lClose := .F. ) SIZE 70,15 OF oDlg  PIXEL
@@ -606,7 +623,6 @@ Local lOkRDZ         := .F.
 DEFAULT cIdFunc      := ""
 DEFAULT cPwdFunc     := ""
 
-lClose   := .T.
 cIdFunc  := AllTrim(cIdFunc)
 cPwdFunc := AllTrim(cPwdFunc)
 If !File( cPath + "\" + cArqRDZ )
@@ -614,7 +630,7 @@ If !File( cPath + "\" + cArqRDZ )
    cMsg += OemToAnsi(STR0205) //"Sem essa informação não será possível criar o relacionamento entre o funcionário e o participante, e o acesso ao Meu RH não será possível."
    cMsg += OemToAnsi(STR0206) //"Para mais informações consulte o(s) link(s) abaixo:"
    cMsg += CRLF
-   cMsg += "=> https://tdn.totvs.com/x/ZMimHQ""
+   cMsg += "=> https://tdn.totvs.com/x/ZMimHQ"
    cMsg += CRLF
    cMsg += "=> https://centraldeatendimento.totvs.com/hc/pt-br/articles/360059317533-MP-PORTAL-GCH-Arquivo-MSRELRDZ-ini"
    aAdd( aErr, { OemToAnsi(cMsg) }) 
@@ -943,32 +959,32 @@ Local aParsMHR := {}
 Local lRet     := .T.
 
 //Parametro, Valor Default
-aParsMHR := {  {"MV_ACESSPP",  "", "https://tdn.totvs.com/x/dNlc"}, ; //https://tdn.totvs.com/x/dNlc
-               {"MV_DABERTO",   0, "https://tdn.totvs.com/x/cXBGIQ"}, ; //https://tdn.totvs.com/x/cXBGIQ
-               {"MV_HASHVLD",  60, ""}, ; //Não encontrei
-               {"MV_POLSEG",    0, "https://tdn.totvs.com/x/7InUIQ"}, ; //https://tdn.totvs.com/x/7InUIQ
-               {"MV_NVLAPR",  .F., "https://tdn.totvs.com/x/a6yGIQ"}, ; //https://tdn.totvs.com/x/a6yGIQ
-               {"MV_TCFVREN", "N", "https://tdn.totvs.com/x/2lh9Ig"}, ; //https://tdn.totvs.com/x/2lh9Ig
-               {"MV_MCIGUAL", "N", ""}, ;
-               {"MV_HORASDE", "N", ""}, ;
-               {"MV_PONMES",   "", ""}, ;
-               {"MV_PAPONTA",  "", ""}, ;
-               {"MV_DSOLFER",  30, ""}, ;
-               {"MV_MRHFERP", .T., ""}, ; 
-               {"MV_GETMAUT", "S", ""}, ;  
-               {"MV_ORGCFG",  "0", ""}, ;
-               {"MV_SOLICRP", "0", ""}, ;
-               {"MV_DESPMIN", "0", ""}, ;
-               {"MV_TCFBHVL", .F., ""}, ;
-               {"MV_TCF013A", "01.02.03.04.05", ""}, ;
-               {"MV_TCFDADT", "0", ""}, ;
-               {"MV_TCFDFOL", "0", ""}, ;
-               {"MV_TCFD131", "0", ""}, ;
-               {"MV_TCFD132", "0", ""}, ;
-               {"MV_TCFDEXT", "0", ""}, ; 
-               {"MV_RELSERV", "", ""}, ;
-               {"MV_EMCONTA", "", ""}, ;
-               {"MV_EMSENHA", "", ""} }
+aParsMHR := {  {"MV_ACESSPP",  "", "https://tdn.totvs.com/x/dNlc"}, ; 
+               {"MV_DABERTO",   0, "https://tdn.totvs.com/x/cXBGIQ"}, ; 
+               {"MV_HASHVLD",  60, ""}, ; 
+               {"MV_POLSEG",    0, "https://tdn.totvs.com/x/7InUIQ"}, ; 
+               {"MV_NVLAPR",  .F., "https://tdn.totvs.com/x/a6yGIQ"}, ; 
+               {"MV_TCFVREN", "N", "https://tdn.totvs.com/x/2lh9Ig"}, ; 
+               {"MV_MCIGUAL", "N", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_HORASDE", "N", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_PONMES",   "", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_PAPONTA",  "", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_DSOLFER",  30, "https://tdn.totvs.com/x/9IsmEw"}, ;
+               {"MV_MRHFERP", .T., "https://tdn.totvs.com/x/Ri0jIw"}, ; 
+               {"MV_GETMAUT", "S", "https://tdn.totvs.com/x/rcvuDQ"}, ;  
+               {"MV_ORGCFG",  "0", "https://tdn.totvs.com/x/LYx9Hg"}, ;
+               {"MV_SOLICRP", "0", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_DESPMIN", "0", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_TCFBHVL", .F., "https://tdn.totvs.com/x/X1veI"}, ;
+               {"MV_TCF013A", "01.02.03.04.05", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_TCFDADT", "0", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_TCFDFOL", "0", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_TCFD131", "0", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_TCFD132", "0", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_TCFDEXT", "0", "https://tdn.totvs.com/x/rcvuDQ"}, ; 
+               {"MV_RELSERV", "", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_EMCONTA", "", "https://tdn.totvs.com/x/rcvuDQ"}, ;
+               {"MV_EMSENHA", "", "https://tdn.totvs.com/x/rcvuDQ"} }
 
 For nX := 1 To Len(aParsMHR)
    
@@ -978,8 +994,8 @@ For nX := 1 To Len(aParsMHR)
    aAdd( aRet, { ;
                   UPPER(aParsMHR[nX,1]), ;
                   cTemp, ;
-                  Iif(lRet, OemToAnsi(STR0122), OemToAnsi(STR0123)), ;
-                  aParsMHR[nX,3] } )
+                  Iif(!lRet, OemToAnsi(STR0123),""), ;
+                  IIf(!lRet, aParsMHR[nX,3], "") } )
 Next nX
 
 Return( aRet )
@@ -1243,7 +1259,7 @@ AutoGrLog( OemToAnsi(STR0061) + Replicate(".", 20-Len(STR0061)) + ": " + GetEnvS
 AutoGrLog("")
 AutoGrLog( OemToAnsi(STR0062) ) //"Parâmetros verificados no Meu RH"
 For nX := 1 To Len(aDataPar)
-   AutoGrLog( aDataPar[nX,1] + " => " + aDataPar[nX,2] + " => " + aDataPar[nX,3] + " => " + OemToAnsi(STR0124) + aDataPar[nX,4])
+   AutoGrLog( aDataPar[nX,1] + " => " + aDataPar[nX,2] + " => " + aDataPar[nX,3] + Iif(!Empty(aDataPar[nX,4]), " => " + OemToAnsi(STR0124) + aDataPar[nX,4], ""))
 Next nX
 
 AutoGrLog("")
@@ -1376,6 +1392,7 @@ Local cUsuario		:= ""
 Local cAssunto    := OemToAnsi("Teste de envio de email.")
 Local cMensagem   := OemToAnsi("Email enviado.")
 Local cAttach     := ""
+Local cQuery      := GetNextAlias()
 
 
 //Verifica se existe o SMTP Server
@@ -1439,19 +1456,60 @@ aInfoINI := fGetAppInfo()
 
 If Len(aInfoINI) > 0
    If ( nPos := aScan(aInfoINI, {|x| x[1] == "[MAIL]"}) ) > 0
-      aAdd( aLog, { OemToAnsi(STR0107) }) //"Seção email"
+      aAdd( aLog, { OemToAnsi(STR0107) }) //"Seção [MAIL]"
       For nX := nPos To Len(aInfoINI)
          If aInfoINI[nX,1] == "[MAIL]" .And. !Empty(aInfoINI[nX,2]) .And. !Empty(aInfoINI[nX,3])
             aAdd( aLog, { aInfoINI[nX,2] + " : " + "Valor: " + aInfoINI[nX,3] } )
          EndIf
       Next nX
    Else
-      aAdd( aWarn, { OemToAnsi(STR0107) }) //"Seção email"
-      aAdd( aWarn, { OemToAnsi(STR0108) }) // "Seção E-mail não encontrada no seu AppServer.Ini"
+      aAdd( aWarn, { OemToAnsi(STR0107) }) //"Seção [MAIL]"
+      aAdd( aWarn, { OemToAnsi(STR0108) }) // "Seção [MAIL] não encontrada no seu AppServer.Ini"
       aAdd( aWarn, { OemToAnsi(STR0113) }) // "O Documento a seguir orienta na configuração dos e-mails/workflows"
       aAdd( aWarn, {"https://tdn.totvs.com/x/aopc"})
    EndIf
 EndIf
+
+//Validando informações de workflow conforme tabela WF7
+BEGINSQL ALIAS cQuery
+   SELECT 
+      WF7.WF7_FILIAL,
+      WF7.WF7_ENDERE,
+      WF7.WF7_POP3SR,
+      WF7.WF7_CONTA,
+      WF7.WF7_SMTPSR,
+      WF7.WF7_AUTUSU,
+      WF7.WF7_ATIVO,
+      WF7.WF7_POP3PR,
+      WF7.WF7_SMTPPR
+   FROM 
+      %table:WF7% WF7
+   WHERE 
+      WF7.WF7_FILIAL = %Exp:xFilial("WF7",cFilAnt)% AND
+      WF7.%notDel%
+ENDSQL
+
+If (cQuery)->(!EoF())
+   aAdd(aLog, { OemToAnsi(STR0300) }) // Dados do workflow
+   While (cQuery)->(!EoF())
+      aAdd(aLog, { fGetTitle("WF7_FILIAL")  + " : " + (cQuery)->WF7_FILIAL } )
+      aAdd(aLog, { fGetTitle("WF7_ENDERE")  + " : " + (cQuery)->WF7_ENDERE } )
+      aAdd(aLog, { fGetTitle("WF7_POP3SR")  + " : " + (cQuery)->WF7_POP3SR } )
+      aAdd(aLog, { fGetTitle("WF7_POP3PR")  + " : " + cValToChar((cQuery)->WF7_POP3PR) } )
+      aAdd(aLog, { fGetTitle("WF7_CONTA")  + " : " + (cQuery)->WF7_CONTA  } )
+      aAdd(aLog, { fGetTitle("WF7_SMTPSR") + " : " + (cQuery)->WF7_SMTPSR } )
+      aAdd(aLog, { fGetTitle("WF7_SMTPPR") + " : " + cValToChar((cQuery)->WF7_SMTPPR) } )
+      aAdd(aLog, { fGetTitle("WF7_AUTUSU") + " : " + (cQuery)->WF7_AUTUSU } )
+      aAdd(aLog, { fGetTitle("WF7_ATIVO")  + " : " + (cQuery)->WF7_ATIVO } )
+      (cQuery)->(dbSkip())
+   EndDo
+   (cQuery)->(DBCloseArea())
+Else
+   aAdd( aErr, { OemToAnsi(STR0126) } ) // Dados de workflow não cadastrado.
+   aAdd( aErr, { OemToAnsi(STR0113) } ) // "O Documento a seguir orienta na configuração dos e-mails/workflows"
+   aAdd( aErr, { "https://tdn.totvs.com/pages/releaseview.action?pageId=271166884" })
+EndIf
+
 
 aAdd( aLogG, {aLog} )
 aAdd( aErrG, {aErr} )
