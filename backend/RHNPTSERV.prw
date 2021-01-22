@@ -464,7 +464,7 @@ If nNumInst > 0
          aAdd( aLog, { "" })
       EndIf
       //Verifica se o local dos arquivos do Meu RH estão dentro do rootpath
-      If !(cRoot $ aSession[nX,2])
+      If !(UPPER(cRoot) $ UPPER(aSession[nX,2]))
          //"SERVER -" # "A pasta com os arquivos do Meu RH não está na raiz do Protheus. Isso afeta o funcionamento da rotina 'Esqueci minha senha'."
          aAdd( aWarn, {OemToAnsi(STR0028) +" "+ OemToAnsi(STR0029)} )
       EndIf
@@ -1267,7 +1267,7 @@ AutoGrLog( OemToAnsi(STR0061) + Replicate(".", 20-Len(STR0061)) + ": " + GetEnvS
 AutoGrLog("")
 AutoGrLog( OemToAnsi(STR0062) ) //"Parâmetros verificados no Meu RH"
 For nX := 1 To Len(aDataPar)
-   AutoGrLog( aDataPar[nX,1] + " => " + aDataPar[nX,2] + " => " + aDataPar[nX,3] + Iif(!Empty(aDataPar[nX,4]), " => " + OemToAnsi(STR0124) + aDataPar[nX,4], ""))
+   AutoGrLog( aDataPar[nX,1] + " => " + aDataPar[nX,2] + Iif(!Empty(aDataPar[nX,3])," => " + aDataPar[nX,3], "" + aDataPar[nX,3]) + Iif(!Empty(aDataPar[nX,4]), " => " + OemToAnsi(STR0124) + aDataPar[nX,4], ""))
 Next nX
 
 AutoGrLog("")
@@ -1427,9 +1427,13 @@ If Len(aWarn) > 0
 EndIf
 
 If lMailAuth
+   aAdd(aLog, {""})
    aAdd(aLog, { OemToAnsi(STR0114) }) // O parâmetro MV_RELAUTH está habilitado. Nesse caso o servidor SMTP usará autenticação
+   aAdd(aLog, {""})
 Else
+   aAdd(aLog, {""})
    aAdd(aLog, { OemToAnsi(STR0115) }) // O parâmetro MV_RELAUTH está desabilitado. Nesse caso o servidor SMTP não usará autenticação
+   aAdd(aLog, {""})
 EndIf
 
 // Testa conexão SMTP.
@@ -1443,7 +1447,9 @@ If !Empty(cMailServer) .AND. !Empty(cMailConta) .AND. !Empty(cMailSenha)
       If lMailAuth
          If !MailAuth(cMailConta,cMailSenha)
             If !MailAuth(cUsuario, cMailSenha)
+               aAdd( aErr, { "" })
                aAdd( aErr, { OemToAnsi(STR0113) })
+               aAdd( aErr, { "" })
             EndIf
          EndIf
       EndIf                                                                     
@@ -1455,11 +1461,10 @@ If !Empty(cMailServer) .AND. !Empty(cMailConta) .AND. !Empty(cMailSenha)
                ATTACHMENT cAttach;					
                RESULT lSendOk 
       If !lSendOk
-         aAdd( aErr, { "" })
-         aAdd(aErr, { OemToAnsi(STR0117) }) // "Não foi possível enviar o email para o destinatário."
+         aAdd( aErr, { OemToAnsi(STR0117) }) // "Não foi possível enviar o email para o destinatário."
          aAdd( aErr, { "" })
       Else
-         aAdd( aLog, { "" })
+
          aAdd(aLog, { OemToAnsi(STR0120) }) // "Teste de email enviado com sucesso.
          aAdd( aLog, { "" })
       EndIf
@@ -1507,7 +1512,9 @@ BEGINSQL ALIAS cQuery
 ENDSQL
 
 If (cQuery)->(!EoF())
+   aAdd(aLog, {""})
    aAdd(aLog, { OemToAnsi(STR0300) }) // Dados do workflow
+   aAdd(aLog, {""})
    While (cQuery)->(!EoF())
       aAdd(aLog, { fGetTitle("WF7_FILIAL")  + " : " + (cQuery)->WF7_FILIAL } )
       aAdd(aLog, { fGetTitle("WF7_ENDERE")  + " : " + (cQuery)->WF7_ENDERE } )
