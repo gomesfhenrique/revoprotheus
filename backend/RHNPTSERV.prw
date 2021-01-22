@@ -125,17 +125,12 @@
 #define STR0118 "Informe o email de destino."
 #define STR0119 "Não foi possível se conectar no servidor SMTP. Verifique se o usuário(Email) e senha estão corretos."
 #define STR0120 "Teste de email enviado com sucesso."
-#define STR0121 "Testando conexão SMTP e evio de email."
+#define STR0121 "Testando conexão SMTP e envio de email."
 #define STR0122 "Parâmetro existe na base de dados."
 #define STR0123 "Parâmetro não existe na base de dados."
 #define STR0124 "Documentação: "
 #define STR0125 "Email: "
 #define STR0126 "Dados de Workflow não cadastrados."
-#define STR0300 "Dados de Workflow"
-#define STR0301 "O sistema irá avaliar se está correto o vínculo do funcionário e o respectivo participante ao qual ele está relacionado. Será verificado também se existe alguma inconsistência no Cadastro do Participante para acesso ao Meu RH."
-#define STR0302 "O sistema irá avaliar a configuração do Servidor REST e verificar se existe alguma inconsistência nas instâncias do serviço do Meu RH. Serão avaliados também os arquivos de configuração de cada instância (PROPERTIES.JSON)."
-#define STR0303 "O sistema irá executar uma validação de requisição para o serviço selecionado, para verificar se existe alguma inconsistência na requisição. Será necessário informar um endereço de email válido."
-#define STR0304 "O sistema irá avaliar a configuração do Workflow e verificar se existe alguma inconsistência nas instâncias do serviço do Meu RH."
 
 
 //Marcelo - Novas strings a partir do 200
@@ -157,7 +152,12 @@
 #define STR0215 "Clique em finalizar para encerrar a operação."
 
 //Fabio - Novas strings a partir do 300
-//#define STR0300 ""
+#define STR0300 "Dados de Workflow"
+#define STR0301 "O sistema irá avaliar se está correto o vínculo do funcionário e o respectivo participante ao qual ele está relacionado. Será verificado também se existe alguma inconsistência no Cadastro do Participante para acesso ao Meu RH."
+#define STR0302 "O sistema irá avaliar a configuração do Servidor REST e verificar se existe alguma inconsistência nas instâncias do serviço do Meu RH. Serão avaliados também os arquivos de configuração de cada instância (PROPERTIES.JSON)."
+#define STR0303 "O sistema irá executar uma validação de requisição para o serviço selecionado, para verificar se existe alguma inconsistência na requisição. Será necessário informar um endereço de email válido."
+#define STR0304 "O sistema irá avaliar a configuração do Workflow e verificar se existe alguma inconsistência nas instâncias do serviço do Meu RH."
+#define STR0305 "Na configuração do arquivo properties.json a tag deve se incluida com o endereço do REST, exemplo: http://10.173.3.216:4141/rest50"
 
 //Elaine - Novas strings a partir do 400
 #define STR0400 ""
@@ -1405,16 +1405,19 @@ Local cQuery      := GetNextAlias()
 
 //Verifica se existe o SMTP Server
 If Empty(cMailServer)
+   aAdd( aWarn, { "" })
    aAdd( aWarn, { OemToAnsi(STR0112) })
 EndIf
 
 //Verifica se existe a CONTA 
 If Empty(cMailConta)
+   aAdd( aWarn, { "" })
    aAdd( aWarn, { OemToAnsi(STR0110) })
 EndIf
 
 //Verifica se existe a Senha
 If Empty(cMailSenha) 
+   aAdd( aWarn, { "" })
    aAdd( aWarn, { OemToAnsi(STR0111) })
 EndIf
 
@@ -1430,7 +1433,9 @@ Else
 EndIf
 
 // Testa conexão SMTP.
+aAdd( aLog, { "" })
 aAdd(aLog, { OemToAnsi(STR0121) }) // Testando conexão SMTP e evio de email.
+aAdd( aLog, { "" })
 If !Empty(cMailServer) .AND. !Empty(cMailConta) .AND. !Empty(cMailSenha)
    cUsuario := SubStr(cMailConta,1,At("@",cMailConta)-1)
    CONNECT SMTP SERVER cMailServer ACCOUNT cMailConta PASSWORD cMailSenha RESULT lOk
@@ -1450,9 +1455,13 @@ If !Empty(cMailServer) .AND. !Empty(cMailConta) .AND. !Empty(cMailSenha)
                ATTACHMENT cAttach;					
                RESULT lSendOk 
       If !lSendOk
+         aAdd( aErr, { "" })
          aAdd(aErr, { OemToAnsi(STR0117) }) // "Não foi possível enviar o email para o destinatário."
+         aAdd( aErr, { "" })
       Else
+         aAdd( aLog, { "" })
          aAdd(aLog, { OemToAnsi(STR0120) }) // "Teste de email enviado com sucesso.
+         aAdd( aLog, { "" })
       EndIf
       DISCONNECT SMTP SERVER
    Else
